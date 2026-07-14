@@ -17,7 +17,7 @@ export default function ComingSoon() {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     // For glowing background
     mouseX.set(x);
     mouseY.set(y);
@@ -38,16 +38,15 @@ export default function ComingSoon() {
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-950 px-6 py-12 font-sans selection:bg-violet-500/30">
-      
       {/* ── Background Orbs ────────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
         <div className="absolute top-1/4 -left-32 h-125 w-125 rounded-full bg-violet-600/20 blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-32 h-125 w-125 rounded-full bg-fuchsia-600/20 blur-[120px]" />
-        <div className="absolute left-1/2 top-1/2 h-200 w-200 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-900/20 blur-[150px]" />
+        <div className="absolute -right-32 bottom-1/4 h-125 w-125 rounded-full bg-fuchsia-600/20 blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 h-200 w-200 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-900/20 blur-[150px]" />
       </div>
 
       {/* ── Grid Pattern ───────────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] bg-size-[4rem_4rem]" />
 
       {/* ── Main 3D Card ───────────────────────────────── */}
       <motion.div
@@ -57,7 +56,7 @@ export default function ComingSoon() {
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="group relative z-10 w-full max-w-2xl perspective-1000"
+        className="group perspective-1000 relative z-10 w-full max-w-2xl"
       >
         {/* Glow effect on hover */}
         <motion.div
@@ -88,7 +87,8 @@ export default function ComingSoon() {
               Coming Soon
             </h1>
             <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-slate-400 sm:text-lg">
-              We&apos;re crafting something extraordinary. This feature is currently under development and will be available shortly.
+              We&apos;re crafting something extraordinary. This feature is currently under
+              development and will be available shortly.
             </p>
           </div>
 
@@ -116,7 +116,6 @@ export default function ComingSoon() {
         <Sparkles className="size-4 text-violet-400" />
         Powered By <span className="text-white">Kaishi Innovations</span>
       </motion.div>
-
     </div>
   );
 }

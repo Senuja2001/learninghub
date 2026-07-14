@@ -12,14 +12,7 @@ import {
   Users,
 } from "lucide-react";
 
-const categories = [
-  "All",
-  "Discussions",
-  "Questions",
-  "Study Groups",
-  "Events",
-  "Announcements",
-];
+const categories = ["All", "Discussions", "Questions", "Study Groups", "Events", "Announcements"];
 
 const filters = ["Trending", "Latest", "Unanswered", "Most Liked"];
 
@@ -81,12 +74,9 @@ export default function CommunityPage() {
     <div className="space-y-6">
       <section className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-3xl font-black tracking-normal text-slate-950">
-            Community
-          </h1>
+          <h1 className="text-3xl font-black tracking-normal text-slate-950">Community</h1>
           <p className="mt-2 text-sm text-slate-600">
-            Connect, ask questions, share resources, and learn with other
-            developers.
+            Connect, ask questions, share resources, and learn with other developers.
           </p>
         </div>
         <button className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-violet-600 px-4 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700">
@@ -120,7 +110,7 @@ export default function CommunityPage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <textarea
-                    className="h-16 w-full resize-none rounded-lg border border-slate-200 px-4 py-3 text-sm outline-none transition placeholder:text-slate-500 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+                    className="h-16 w-full resize-none rounded-lg border border-slate-200 px-4 py-3 text-sm transition outline-none placeholder:text-slate-500 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
                     placeholder="Share something with the community..."
                   />
                   <div className="mt-3 flex flex-col gap-3 rounded-lg border border-slate-200 p-2 sm:flex-row sm:items-center sm:justify-between">
@@ -175,25 +165,20 @@ export default function CommunityPage() {
 
             <div>
               {posts.map((post) => (
-                <article
-                  key={post.title}
-                  className="border-b border-slate-100 p-5 last:border-b-0"
-                >
+                <article key={post.title} className="border-b border-slate-100 p-5 last:border-b-0">
                   <div className="flex gap-4">
                     <div className="grid size-11 shrink-0 place-items-center rounded-full bg-slate-900 text-sm font-black text-white">
                       {post.avatar}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
-                        <span className="font-bold text-slate-950">
-                          {post.author}
-                        </span>
+                        <span className="font-bold text-slate-950">{post.author}</span>
                         <span>{post.role}</span>
                         <span>•</span>
                         <span>{post.time}</span>
                       </div>
                       <div className="mt-2 flex gap-3">
-                        <h2 className="min-w-0 flex-1 text-base font-black leading-6 text-slate-950">
+                        <h2 className="min-w-0 flex-1 text-base leading-6 font-black text-slate-950">
                           {post.title}
                         </h2>
                         <span
@@ -202,9 +187,7 @@ export default function CommunityPage() {
                           {post.type}
                         </span>
                       </div>
-                      <p className="mt-1 text-sm leading-6 text-slate-600">
-                        {post.body}
-                      </p>
+                      <p className="mt-1 text-sm leading-6 text-slate-600">{post.body}</p>
                       <div className="mt-4 flex flex-wrap items-center gap-6 text-sm font-medium text-slate-500">
                         <span className="inline-flex items-center gap-2">
                           <Heart className="size-4" />
@@ -237,24 +220,17 @@ export default function CommunityPage() {
           <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-black">Study Groups</h2>
-              <button className="text-sm font-bold text-violet-700">
-                View all
-              </button>
+              <button className="text-sm font-bold text-violet-700">View all</button>
             </div>
             <div className="mt-4 space-y-3">
               {groups.map((group) => (
-                <div
-                  key={group.name}
-                  className="rounded-lg border border-slate-100 p-4"
-                >
+                <div key={group.name} className="rounded-lg border border-slate-100 p-4">
                   <div className="flex items-center gap-3">
                     <div className="grid size-10 place-items-center rounded-lg bg-violet-100 text-violet-700">
                       <Users className="size-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-black">
-                        {group.name}
-                      </p>
+                      <p className="truncate text-sm font-black">{group.name}</p>
                       <p className="text-xs text-slate-500">
                         {group.members} members • {group.topic}
                       </p>
@@ -269,8 +245,7 @@ export default function CommunityPage() {
             <PenLine className="size-8" />
             <h2 className="mt-4 text-xl font-black">Share your knowledge</h2>
             <p className="mt-2 text-sm leading-6 text-violet-100">
-              Start a discussion, ask for help, or invite learners to a study
-              session.
+              Start a discussion, ask for help, or invite learners to a study session.
             </p>
             <button className="mt-5 h-10 rounded-lg bg-white px-4 text-sm font-black text-violet-700">
               New Discussion

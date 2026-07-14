@@ -4,14 +4,21 @@ import { NextRequest, NextResponse } from "next/server";
 function generatePosts(q: string) {
   const isSearch = Boolean(q);
   // If searching, generate 15 specific results, otherwise 50 hot posts
-  const count = isSearch ? 15 : 50; 
+  const count = isSearch ? 15 : 50;
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   const searchKeyword = isSearch ? capitalize(q) : "Tech";
 
   return Array.from({ length: count }).map((_, i) => {
     const topics = ["Programming", "Web Dev", "AI", "Learning", "Career", "Games"];
-    const subreddits = ["programming", "webdev", "MachineLearning", "learnprogramming", "cscareerquestions", "GamesOnReddit"];
-    
+    const subreddits = [
+      "programming",
+      "webdev",
+      "MachineLearning",
+      "learnprogramming",
+      "cscareerquestions",
+      "GamesOnReddit",
+    ];
+
     // Pick a topic at random
     const randIndex = Math.floor(Math.random() * topics.length);
     const topic = topics[randIndex];
@@ -26,7 +33,7 @@ function generatePosts(q: string) {
         `Why I stopped using ${searchKeyword}`,
         `Is ${searchKeyword} worth learning in 2026?`,
         `Showoff Saturday: I built this using ${searchKeyword}!`,
-        `${searchKeyword} vs the alternatives — what are your thoughts?`
+        `${searchKeyword} vs the alternatives — what are your thoughts?`,
       ];
       title = searchTitles[i % searchTitles.length];
     } else {
@@ -42,9 +49,9 @@ function generatePosts(q: string) {
     }
 
     return {
-      id: `mock-post-${isSearch ? 'search' : 'hot'}-${i}-${Date.now()}`,
+      id: `mock-post-${isSearch ? "search" : "hot"}-${i}-${Date.now()}`,
       title,
-      summary: `This is a realistic simulated discussion thread for ${topic}${isSearch ? ` revolving around ${searchKeyword}` : ''}. Users are discussing best practices, sharing code snippets, and debating the trade-offs of modern architectures...`,
+      summary: `This is a realistic simulated discussion thread for ${topic}${isSearch ? ` revolving around ${searchKeyword}` : ""}. Users are discussing best practices, sharing code snippets, and debating the trade-offs of modern architectures...`,
       subreddit,
       createdAt: Math.floor(Date.now() / 1000) - Math.floor(Math.random() * 86400),
       upvotes: `${Math.floor(Math.random() * 50 + 1)}k`,

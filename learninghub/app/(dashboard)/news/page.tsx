@@ -52,23 +52,23 @@ const PER_PAGE = 5;
 const TOPICS: TopicKey[] = ["All", "Programming", "Web Dev", "AI", "Learning", "Career", "Games"];
 
 const TOPIC_THUMB: Record<TopicKey, { bg: string; accent: string }> = {
-  All:         { bg: "#1e1b4b", accent: "#a5b4fc" },
+  All: { bg: "#1e1b4b", accent: "#a5b4fc" },
   Programming: { bg: "#0c1a2e", accent: "#38bdf8" },
-  "Web Dev":   { bg: "#052e16", accent: "#4ade80" },
-  AI:          { bg: "#1e0b3a", accent: "#d8b4fe" },
-  Learning:    { bg: "#1c1004", accent: "#fbbf24" },
-  Career:      { bg: "#2d0a0a", accent: "#f87171" },
-  Games:       { bg: "#0a1f0a", accent: "#86efac" },
+  "Web Dev": { bg: "#052e16", accent: "#4ade80" },
+  AI: { bg: "#1e0b3a", accent: "#d8b4fe" },
+  Learning: { bg: "#1c1004", accent: "#fbbf24" },
+  Career: { bg: "#2d0a0a", accent: "#f87171" },
+  Games: { bg: "#0a1f0a", accent: "#86efac" },
 };
 
 const TOPIC_BADGE: Record<TopicKey, string> = {
-  All:         "bg-violet-50 text-violet-600 border-violet-100",
+  All: "bg-violet-50 text-violet-600 border-violet-100",
   Programming: "bg-sky-50 text-sky-600 border-sky-100",
-  "Web Dev":   "bg-emerald-50 text-emerald-600 border-emerald-100",
-  AI:          "bg-purple-50 text-purple-600 border-purple-100",
-  Learning:    "bg-amber-50 text-amber-600 border-amber-100",
-  Career:      "bg-rose-50 text-rose-600 border-rose-100",
-  Games:       "bg-lime-50 text-lime-600 border-lime-100",
+  "Web Dev": "bg-emerald-50 text-emerald-600 border-emerald-100",
+  AI: "bg-purple-50 text-purple-600 border-purple-100",
+  Learning: "bg-amber-50 text-amber-600 border-amber-100",
+  Career: "bg-rose-50 text-rose-600 border-rose-100",
+  Games: "bg-lime-50 text-lime-600 border-lime-100",
 };
 
 /* ─── API Fetcher ────────────────────────────────────────────────── */
@@ -76,7 +76,7 @@ async function fetchRedditPosts(query: string, isFresh: boolean): Promise<Reddit
   const url = query
     ? `/api/reddit?mode=search&q=${encodeURIComponent(query)}`
     : `/api/reddit?mode=hot${isFresh ? "&fresh=1" : ""}`;
-  
+
   const res = await fetch(url);
   const json = await res.json();
   if (!res.ok) throw new Error(json.error ?? "Failed to fetch Reddit posts.");
@@ -108,10 +108,10 @@ function PostSkeleton() {
 export default function NewsPage() {
   /* State */
   const [activeTopic, setActiveTopic] = useState<TopicKey>("All");
-  const [page, setPage]               = useState(1);
-  const [query, setQuery]             = useState("");
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [freshNonce, setFreshNonce]   = useState(0);
+  const [freshNonce, setFreshNonce] = useState(0);
 
   /* Global Zustand Store */
   const savedIds = useUserStore((s) => s.savedRedditPostIds);
@@ -127,7 +127,13 @@ export default function NewsPage() {
   }, [query]);
 
   /* TanStack Query */
-  const { data: allPosts = [], isLoading, isFetching, error, refetch } = useQuery({
+  const {
+    data: allPosts = [],
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["reddit", debouncedQuery, freshNonce],
     queryFn: () => fetchRedditPosts(debouncedQuery, freshNonce > 0),
     staleTime: 5 * 60 * 1000, // 5 mins
@@ -135,7 +141,8 @@ export default function NewsPage() {
 
   /* Derived data */
   const searchMode = Boolean(debouncedQuery.trim());
-  const filtered = activeTopic === "All" ? allPosts : allPosts.filter((p) => p.topic === activeTopic);
+  const filtered =
+    activeTopic === "All" ? allPosts : allPosts.filter((p) => p.topic === activeTopic);
   const pageCount = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const visible = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
   const savedPosts = allPosts.filter((p) => savedIds.includes(p.id));
@@ -169,7 +176,6 @@ export default function NewsPage() {
   return (
     <Tooltip.Provider delayDuration={300}>
       <div className="space-y-6">
-
         {/* Page header */}
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -186,7 +192,7 @@ export default function NewsPage() {
                 type="button"
                 onClick={handleRefresh}
                 disabled={isFetching}
-                className="group inline-flex h-9 shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-60 active:scale-95"
+                className="group inline-flex h-9 shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <RefreshCcw
                   className={`size-3.5 ${isFetching ? "animate-spin" : "transition-transform duration-500 group-hover:rotate-180"}`}
@@ -195,7 +201,10 @@ export default function NewsPage() {
               </button>
             </Tooltip.Trigger>
             <Tooltip.Portal>
-              <Tooltip.Content className="rounded bg-slate-900 px-2 py-1 text-xs font-medium text-white shadow-lg animate-in fade-in zoom-in-95" sideOffset={5}>
+              <Tooltip.Content
+                className="animate-in fade-in zoom-in-95 rounded bg-slate-900 px-2 py-1 text-xs font-medium text-white shadow-lg"
+                sideOffset={5}
+              >
                 Pull latest from Reddit directly
                 <Tooltip.Arrow className="fill-slate-900" />
               </Tooltip.Content>
@@ -205,13 +214,17 @@ export default function NewsPage() {
 
         {/* Main grid */}
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
-
           {/* ── LEFT: Feed ─────────────────────────────────────────── */}
           <div className="space-y-3">
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              
               {/* Radix Tabs for Topics */}
-              <Tabs.Root value={activeTopic} onValueChange={(v: string) => { setActiveTopic(v as TopicKey); setPage(1); }}>
+              <Tabs.Root
+                value={activeTopic}
+                onValueChange={(v: string) => {
+                  setActiveTopic(v as TopicKey);
+                  setPage(1);
+                }}
+              >
                 <Tabs.List className="flex flex-wrap gap-2">
                   {TOPICS.map((topic) => {
                     const count = topicCounts[topic] ?? 0;
@@ -233,7 +246,7 @@ export default function NewsPage() {
                         <span className="relative z-10 flex items-center gap-1.5">
                           {topic}
                           {!isLoading && count > 0 && activeTopic !== topic && (
-                            <span className="text-slate-400 group-data-[state=inactive]:group-hover:text-violet-400 transition-colors">
+                            <span className="text-slate-400 transition-colors group-data-[state=inactive]:group-hover:text-violet-400">
                               {count}
                             </span>
                           )}
@@ -275,18 +288,28 @@ export default function NewsPage() {
                     <span className="font-semibold text-slate-600">{filtered.length}</span>{" "}
                     {searchMode ? "results" : "threads"} · {allPosts.length} loaded
                   </span>
-                  <span>Page {page} / {pageCount}</span>
+                  <span>
+                    Page {page} / {pageCount}
+                  </span>
                 </div>
               )}
             </div>
 
             {/* Error state */}
             {error && !isLoading && (
-              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 p-4">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 p-4"
+              >
                 <AlertCircle className="mt-0.5 size-5 shrink-0 text-red-500" />
                 <div>
                   <p className="text-sm font-semibold text-red-700">{(error as Error).message}</p>
-                  <button type="button" onClick={() => refetch()} className="mt-1 text-xs font-semibold text-red-500 underline hover:text-red-700">
+                  <button
+                    type="button"
+                    onClick={() => refetch()}
+                    className="mt-1 text-xs font-semibold text-red-500 underline hover:text-red-700"
+                  >
                     Try again
                   </button>
                 </div>
@@ -304,7 +327,11 @@ export default function NewsPage() {
 
             {/* Empty state */}
             {!isLoading && !error && visible.length === 0 && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center"
+              >
                 <div className="grid size-12 place-items-center rounded-xl bg-slate-100">
                   <Search className="size-5 text-slate-400" />
                 </div>
@@ -319,7 +346,9 @@ export default function NewsPage() {
                 <AnimatePresence mode="popLayout">
                   {visible.map((post, i) => {
                     const saved = savedIds.includes(post.id);
-                    const key   = (TOPICS.includes(post.topic as TopicKey) ? post.topic : "All") as TopicKey;
+                    const key = (
+                      TOPICS.includes(post.topic as TopicKey) ? post.topic : "All"
+                    ) as TopicKey;
                     const badge = TOPIC_BADGE[key] ?? "bg-slate-50 text-slate-500 border-slate-200";
                     const { bg, accent } = TOPIC_THUMB[key];
                     const timeAgo = formatDistanceToNow(post.createdAt * 1000, { addSuffix: true });
@@ -335,16 +364,22 @@ export default function NewsPage() {
                         className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-200 hover:border-violet-200 hover:shadow-md hover:shadow-violet-100/50"
                       >
                         {/* Topic thumbnail */}
-                        <div className="flex size-18 shrink-0 flex-col items-center justify-center gap-1 rounded-xl" style={{ background: bg }}>
+                        <div
+                          className="flex size-18 shrink-0 flex-col items-center justify-center gap-1 rounded-xl"
+                          style={{ background: bg }}
+                        >
                           <SiReddit style={{ color: accent, fontSize: 30 }} />
-                          <span className="text-[9px] font-bold tracking-wide" style={{ color: accent, opacity: 0.75 }}>
+                          <span
+                            className="text-[9px] font-bold tracking-wide"
+                            style={{ color: accent, opacity: 0.75 }}
+                          >
                             Reddit
                           </span>
                         </div>
 
                         {/* Content */}
                         <div className="min-w-0 flex-1">
-                          <h2 className="line-clamp-2 text-[15px] font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-violet-700">
+                          <h2 className="line-clamp-2 text-[15px] leading-snug font-bold text-slate-900 transition-colors duration-200 group-hover:text-violet-700">
                             {post.title}
                           </h2>
                           <p className="mt-1 line-clamp-1 text-xs leading-relaxed text-slate-500">
@@ -355,15 +390,22 @@ export default function NewsPage() {
                           <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
                             <span className="inline-flex items-center gap-1.5 text-xs">
                               <SiReddit className="size-3 text-orange-400" />
-                              <span className="font-semibold text-orange-500">{post.subreddit}</span>
+                              <span className="font-semibold text-orange-500">
+                                {post.subreddit}
+                              </span>
                             </span>
 
-                            <span className="inline-flex items-center gap-1 text-xs text-slate-400" title={new Date(post.createdAt * 1000).toLocaleString()}>
+                            <span
+                              className="inline-flex items-center gap-1 text-xs text-slate-400"
+                              title={new Date(post.createdAt * 1000).toLocaleString()}
+                            >
                               <Clock className="size-3" />
                               {timeAgo}
                             </span>
 
-                            <span className={`rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${badge}`}>
+                            <span
+                              className={`rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${badge}`}
+                            >
                               {post.topic}
                             </span>
 
@@ -378,13 +420,21 @@ export default function NewsPage() {
                               </span>
                               <Tooltip.Root>
                                 <Tooltip.Trigger asChild>
-                                  <a href={post.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-violet-600 transition-colors hover:text-violet-700">
+                                  <a
+                                    href={post.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1 text-xs font-semibold text-violet-600 transition-colors hover:text-violet-700"
+                                  >
                                     View
                                     <ExternalLink className="size-3" />
                                   </a>
                                 </Tooltip.Trigger>
                                 <Tooltip.Portal>
-                                  <Tooltip.Content className="rounded bg-slate-900 px-2 py-1 text-xs font-medium text-white shadow-lg animate-in fade-in zoom-in-95" sideOffset={5}>
+                                  <Tooltip.Content
+                                    className="animate-in fade-in zoom-in-95 rounded bg-slate-900 px-2 py-1 text-xs font-medium text-white shadow-lg"
+                                    sideOffset={5}
+                                  >
                                     Open thread in Reddit
                                     <Tooltip.Arrow className="fill-slate-900" />
                                   </Tooltip.Content>
@@ -401,15 +451,24 @@ export default function NewsPage() {
                               type="button"
                               aria-pressed={saved}
                               onClick={() => handleBookmark(post)}
-                              className={`grid size-8 shrink-0 self-start place-items-center rounded-xl transition-all duration-200 ${
-                                saved ? "bg-violet-100 text-violet-600" : "text-slate-300 hover:bg-slate-100 hover:text-violet-500"
+                              className={`grid size-8 shrink-0 place-items-center self-start rounded-xl transition-all duration-200 ${
+                                saved
+                                  ? "bg-violet-100 text-violet-600"
+                                  : "text-slate-300 hover:bg-slate-100 hover:text-violet-500"
                               }`}
                             >
-                              {saved ? <BookmarkCheck className="size-4" /> : <Bookmark className="size-4" />}
+                              {saved ? (
+                                <BookmarkCheck className="size-4" />
+                              ) : (
+                                <Bookmark className="size-4" />
+                              )}
                             </button>
                           </Tooltip.Trigger>
                           <Tooltip.Portal>
-                            <Tooltip.Content className="rounded bg-slate-900 px-2 py-1 text-xs font-medium text-white shadow-lg animate-in fade-in zoom-in-95" sideOffset={5}>
+                            <Tooltip.Content
+                              className="animate-in fade-in zoom-in-95 rounded bg-slate-900 px-2 py-1 text-xs font-medium text-white shadow-lg"
+                              sideOffset={5}
+                            >
                               {saved ? "Remove bookmark" : "Save thread"}
                               <Tooltip.Arrow className="fill-slate-900" />
                             </Tooltip.Content>
@@ -426,7 +485,8 @@ export default function NewsPage() {
             {!isLoading && pageCount > 1 && (
               <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-3.5">
                 <p className="text-xs text-slate-500">
-                  Showing <span className="font-semibold text-slate-700">{visible.length}</span> of <span className="font-semibold text-slate-700">{filtered.length}</span> posts
+                  Showing <span className="font-semibold text-slate-700">{visible.length}</span> of{" "}
+                  <span className="font-semibold text-slate-700">{filtered.length}</span> posts
                 </p>
                 <div className="flex items-center gap-2">
                   <button
@@ -477,7 +537,6 @@ export default function NewsPage() {
 
           {/* ── RIGHT: Sidebar ─────────────────────────────────────── */}
           <aside className="space-y-4">
-
             {/* Saved threads */}
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-2.5">
@@ -496,7 +555,9 @@ export default function NewsPage() {
                 <div className="space-y-2">
                   <AnimatePresence>
                     {savedPosts.map((post) => {
-                      const key = (TOPICS.includes(post.topic as TopicKey) ? post.topic : "All") as TopicKey;
+                      const key = (
+                        TOPICS.includes(post.topic as TopicKey) ? post.topic : "All"
+                      ) as TopicKey;
                       const { bg, accent } = TOPIC_THUMB[key];
                       return (
                         <motion.a
@@ -508,18 +569,19 @@ export default function NewsPage() {
                           href={post.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="group flex items-start gap-2.5 rounded-xl border border-slate-100 bg-slate-50 p-3 transition-all hover:border-violet-200 hover:bg-violet-50 overflow-hidden"
+                          className="group flex items-start gap-2.5 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 p-3 transition-all hover:border-violet-200 hover:bg-violet-50"
                         >
-                          <div className="grid size-8 shrink-0 place-items-center rounded-lg" style={{ background: bg }}>
+                          <div
+                            className="grid size-8 shrink-0 place-items-center rounded-lg"
+                            style={{ background: bg }}
+                          >
                             <SiReddit className="size-4" style={{ color: accent }} />
                           </div>
                           <div className="min-w-0">
-                            <p className="line-clamp-2 text-xs font-semibold leading-4 text-slate-800 group-hover:text-violet-700">
+                            <p className="line-clamp-2 text-xs leading-4 font-semibold text-slate-800 group-hover:text-violet-700">
                               {post.title}
                             </p>
-                            <p className="mt-0.5 text-[11px] text-slate-400">
-                              {post.subreddit}
-                            </p>
+                            <p className="mt-0.5 text-[11px] text-slate-400">{post.subreddit}</p>
                           </div>
                         </motion.a>
                       );
@@ -546,9 +608,24 @@ export default function NewsPage() {
               </div>
               <div className="space-y-3">
                 {[
-                  { label: "Posts loaded", value: isLoading ? "—" : allPosts.length, icon: Sparkles, color: "text-violet-500" },
-                  { label: "Topics", value: isLoading ? "—" : TOPICS.length - 1, icon: Hash, color: "text-sky-500" },
-                  { label: "Saved", value: savedPosts.length, icon: BookmarkCheck, color: "text-emerald-500" },
+                  {
+                    label: "Posts loaded",
+                    value: isLoading ? "—" : allPosts.length,
+                    icon: Sparkles,
+                    color: "text-violet-500",
+                  },
+                  {
+                    label: "Topics",
+                    value: isLoading ? "—" : TOPICS.length - 1,
+                    icon: Hash,
+                    color: "text-sky-500",
+                  },
+                  {
+                    label: "Saved",
+                    value: savedPosts.length,
+                    icon: BookmarkCheck,
+                    color: "text-emerald-500",
+                  },
                 ].map(({ label, value, icon: Icon, color }) => (
                   <div key={label} className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 text-xs text-slate-500">

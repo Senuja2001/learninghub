@@ -24,27 +24,27 @@ import {
 /* ─── Nav links ────────────────────────────────────────────────────────── */
 
 const learnLinks = [
-  { title: "Dashboard",      href: "/dashboard",      icon: LayoutDashboard },
-  { title: "My Courses",     href: "/courses",         icon: BookOpen },
-  { title: "Learning Paths", href: "/learning-paths",  icon: Route },
-  { title: "Certificates",   href: "/certificates",    icon: GraduationCap },
-  { title: "Bookmarks",      href: "/bookmarks",       icon: Bookmark },
-  { title: "Notifications",  href: "/notifications",   icon: Bell, badge: "5" },
+  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { title: "My Courses", href: "/courses", icon: BookOpen },
+  { title: "Learning Paths", href: "/learning-paths", icon: Route },
+  { title: "Certificates", href: "/certificates", icon: GraduationCap },
+  { title: "Bookmarks", href: "/bookmarks", icon: Bookmark },
+  { title: "Notifications", href: "/notifications", icon: Bell, badge: "5" },
 ];
 
 const exploreLinks = [
-  { title: "All Courses",         href: "/all-courses", icon: BookOpen },
-  { title: "Explore by Role",     href: "/roles",       icon: Users },
-  { title: "Explore by Platform", href: "/platforms",   icon: Boxes },
-  { title: "New & Trending",      href: "/trending",    icon: Sparkles },
-  { title: "Community",           href: "/community",   icon: Users },
-  { title: "News",                href: "/news",        icon: Newspaper },
+  { title: "All Courses", href: "/all-courses", icon: BookOpen },
+  { title: "Explore by Role", href: "/roles", icon: Users },
+  { title: "Explore by Platform", href: "/platforms", icon: Boxes },
+  { title: "New & Trending", href: "/trending", icon: Sparkles },
+  { title: "Community", href: "/community", icon: Users },
+  { title: "News", href: "/news", icon: Newspaper },
 ];
 
 const accountLinks = [
-  { title: "My Profile",    href: "/profile",       icon: User },
-  { title: "Settings",      href: "/settings",      icon: Settings },
-  { title: "Help & Support",href: "/help-support",  icon: CircleHelp },
+  { title: "My Profile", href: "/profile", icon: User },
+  { title: "Settings", href: "/settings", icon: Settings },
+  { title: "Help & Support", href: "/help-support", icon: CircleHelp },
 ];
 
 /* ─── NavGroup ─────────────────────────────────────────────────────────── */
@@ -65,7 +65,7 @@ function NavGroup({
 
   return (
     <div>
-      <p className="mb-1.5 px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+      <p className="mb-1.5 px-3 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
         {title}
       </p>
       <nav className="space-y-0.5">
@@ -83,18 +83,12 @@ function NavGroup({
                   : "font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <Icon
-                className={`size-4 shrink-0 ${
-                  active ? "text-white" : "text-slate-400"
-                }`}
-              />
+              <Icon className={`size-4 shrink-0 ${active ? "text-white" : "text-slate-400"}`} />
               <span className="min-w-0 flex-1 truncate">{link.title}</span>
               {link.badge ? (
                 <span
                   className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                    active
-                      ? "bg-white/20 text-white"
-                      : "bg-violet-100 text-violet-700"
+                    active ? "bg-white/20 text-white" : "bg-violet-100 text-violet-700"
                   }`}
                 >
                   {link.badge}
@@ -113,26 +107,19 @@ function NavGroup({
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950">
-
       {/* ── Header ─────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
         <div className="flex h-16 items-center gap-4 px-5 lg:px-6">
-
           {/* Logo */}
-          <Link
-            href="/dashboard"
-            className="flex w-60 shrink-0 items-center gap-3"
-          >
+          <Link href="/dashboard" className="flex w-60 shrink-0 items-center gap-3">
             <div className="grid size-9 place-items-center rounded-xl bg-violet-600 shadow-md shadow-violet-300/40">
               <Boxes className="size-5 text-white" />
             </div>
             <div>
-              <p className="text-[15px] font-black leading-none tracking-tight text-slate-900">
+              <p className="text-[15px] leading-none font-black tracking-tight text-slate-900">
                 LearningHub
               </p>
-              <p className="mt-0.5 text-[11px] text-slate-400">
-                Powered by Kaishi Innovations
-              </p>
+              <p className="mt-0.5 text-[11px] text-slate-400">Powered by Kaishi Innovations</p>
             </div>
           </Link>
 
@@ -159,7 +146,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               className="relative grid size-9 place-items-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50"
             >
               <Bell className="size-4" />
-              <span className="absolute right-1.5 top-1.5 grid size-3.5 place-items-center rounded-full bg-red-500 text-[9px] font-black text-white">
+              <span className="absolute top-1.5 right-1.5 grid size-3.5 place-items-center rounded-full bg-red-500 text-[9px] font-black text-white">
                 5
               </span>
             </button>
@@ -174,12 +161,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 <User className="size-4" />
               </div>
               <span className="text-left">
-                <span className="block text-xs font-bold text-slate-900">
-                  user123
-                </span>
-                <span className="block text-[11px] text-slate-400">
-                  Software Engineer
-                </span>
+                <span className="block text-xs font-bold text-slate-900">user123</span>
+                <span className="block text-[11px] text-slate-400">Software Engineer</span>
               </span>
               <ChevronDown className="size-3.5 text-slate-400" />
             </button>
@@ -189,17 +172,16 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
       {/* ── Body ────────────────────────────────────────────────────── */}
       <div className="flex">
-
         {/* Sidebar */}
         <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-60 shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
           <div className="space-y-5">
-            <NavGroup title="Learn"   links={learnLinks} />
+            <NavGroup title="Learn" links={learnLinks} />
             <NavGroup title="Explore" links={exploreLinks} />
             <NavGroup title="Account" links={accountLinks} />
 
             {/* CTA */}
             <div className="rounded-xl bg-violet-50 p-4">
-              <p className="text-sm font-black leading-tight text-slate-900">
+              <p className="text-sm leading-tight font-black text-slate-900">
                 Learn together.
                 <br />
                 Grow together.
