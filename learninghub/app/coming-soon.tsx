@@ -5,7 +5,7 @@ import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-mot
 import { ArrowLeft, Rocket, Sparkles } from "lucide-react";
 import { MouseEvent } from "react";
 
-export default function NotFound() {
+export default function ComingSoon() {
   /* ─── 3D Hover Effect State ────────────────────────────── */
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -41,13 +41,13 @@ export default function NotFound() {
       
       {/* ── Background Orbs ────────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-        <div className="absolute top-1/4 -left-32 h-[500px] w-[500px] rounded-full bg-violet-600/20 blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-32 h-[500px] w-[500px] rounded-full bg-fuchsia-600/20 blur-[120px]" />
-        <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-900/20 blur-[150px]" />
+        <div className="absolute top-1/4 -left-32 h-125 w-125 rounded-full bg-violet-600/20 blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-32 h-125 w-125 rounded-full bg-fuchsia-600/20 blur-[120px]" />
+        <div className="absolute left-1/2 top-1/2 h-200 w-200 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-900/20 blur-[150px]" />
       </div>
 
       {/* ── Grid Pattern ───────────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[4rem_4rem] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
       {/* ── Main 3D Card ───────────────────────────────── */}
       <motion.div
@@ -70,21 +70,21 @@ export default function NotFound() {
           className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-12 text-center shadow-2xl shadow-black/50 backdrop-blur-2xl"
         >
           {/* Top highlight */}
-          <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-violet-400/50 to-transparent" />
+          <div className="absolute inset-x-0 -top-px h-px bg-linear-to-r from-transparent via-violet-400/50 to-transparent" />
 
           {/* Icon */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", delay: 0.2, bounce: 0.5 }}
-            className="mx-auto mb-8 grid size-20 place-items-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 shadow-lg shadow-violet-500/25"
+            className="mx-auto mb-8 grid size-20 place-items-center rounded-2xl bg-linear-to-br from-violet-500 to-fuchsia-600 shadow-lg shadow-violet-500/25"
           >
             <Rocket className="size-10 text-white" />
           </motion.div>
 
           {/* Text */}
           <div style={{ transform: "translateZ(60px)" }}>
-            <h1 className="bg-gradient-to-br from-white via-white to-white/40 bg-clip-text text-5xl font-black tracking-tight text-transparent sm:text-7xl">
+            <h1 className="bg-linear-to-br from-white via-white to-white/40 bg-clip-text text-5xl font-black tracking-tight text-transparent sm:text-7xl">
               Coming Soon
             </h1>
             <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-slate-400 sm:text-lg">
@@ -98,7 +98,7 @@ export default function NotFound() {
               href="/dashboard"
               className="group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-8 py-3.5 font-bold text-slate-950 transition-transform hover:scale-105 active:scale-95"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-200 to-fuchsia-200 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
+              <div className="absolute inset-0 bg-linear-to-r from-violet-200 to-fuchsia-200 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
               <ArrowLeft className="relative z-10 size-4 transition-transform group-hover/btn:-translate-x-1" />
               <span className="relative z-10">Back to Dashboard</span>
             </Link>
