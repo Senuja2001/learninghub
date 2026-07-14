@@ -88,7 +88,7 @@ export default function NotFound() {
               Coming Soon
             </h1>
             <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-slate-400 sm:text-lg">
-              We're crafting something extraordinary. This feature is currently under development and will be available shortly.
+              We&apos;re crafting something extraordinary. This feature is currently under development and will be available shortly.
             </p>
           </div>
 

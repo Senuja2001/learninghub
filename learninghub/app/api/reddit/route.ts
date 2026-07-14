@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 800));
 
-  let posts = generatePosts(q);
+  const posts = generatePosts(q);
 
   // Shuffle the posts for a realistic feed
   posts.sort(() => Math.random() - 0.5);
