@@ -191,7 +191,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <div className="flex">
 
         {/* Sidebar */}
-        <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-[240px] shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
+        <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-60 shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
           <div className="space-y-5">
             <NavGroup title="Learn"   links={learnLinks} />
             <NavGroup title="Explore" links={exploreLinks} />
