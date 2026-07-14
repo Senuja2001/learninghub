@@ -335,7 +335,7 @@ export default function NewsPage() {
                         className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-200 hover:border-violet-200 hover:shadow-md hover:shadow-violet-100/50"
                       >
                         {/* Topic thumbnail */}
-                        <div className="flex size-[72px] shrink-0 flex-col items-center justify-center gap-1 rounded-xl" style={{ background: bg }}>
+                        <div className="flex size-18 shrink-0 flex-col items-center justify-center gap-1 rounded-xl" style={{ background: bg }}>
                           <SiReddit style={{ color: accent, fontSize: 30 }} />
                           <span className="text-[9px] font-bold tracking-wide" style={{ color: accent, opacity: 0.75 }}>
                             Reddit

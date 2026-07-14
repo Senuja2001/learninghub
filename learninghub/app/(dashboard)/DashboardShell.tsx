@@ -121,7 +121,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           {/* Logo */}
           <Link
             href="/dashboard"
-            className="flex w-[240px] shrink-0 items-center gap-3"
+            className="flex w-60 shrink-0 items-center gap-3"
           >
             <div className="grid size-9 place-items-center rounded-xl bg-violet-600 shadow-md shadow-violet-300/40">
               <Boxes className="size-5 text-white" />
@@ -138,7 +138,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
           {/* Search */}
           <div className="hidden flex-1 justify-center md:flex">
-            <label className="flex h-9 w-full max-w-[480px] items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 shadow-sm transition-all duration-200 focus-within:border-violet-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-violet-50">
+            <label className="flex h-9 w-full max-w-120 items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 shadow-sm transition-all duration-200 focus-within:border-violet-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-violet-50">
               <Search className="size-4 shrink-0 text-slate-400" />
               <input
                 className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
@@ -170,7 +170,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               className="hidden items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 shadow-sm transition hover:bg-slate-50 sm:flex"
             >
               {/* Avatar circle with gradient */}
-              <div className="grid size-8 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-violet-400 via-purple-400 to-indigo-500 text-white">
+              <div className="grid size-8 place-items-center overflow-hidden rounded-full bg-linear-to-br from-violet-400 via-purple-400 to-indigo-500 text-white">
                 <User className="size-4" />
               </div>
               <span className="text-left">
