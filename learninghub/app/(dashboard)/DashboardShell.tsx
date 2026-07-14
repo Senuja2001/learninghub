@@ -175,7 +175,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               </div>
               <span className="text-left">
                 <span className="block text-xs font-bold text-slate-900">
-                  John Doe
+                  user123
                 </span>
                 <span className="block text-[11px] text-slate-400">
                   Software Engineer
