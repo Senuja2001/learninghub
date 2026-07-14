@@ -12,38 +12,42 @@ import {
   GraduationCap,
   LayoutDashboard,
   Newspaper,
+  PenLine,
   Route,
   Search,
   Settings,
-  ShieldCheck,
   Sparkles,
   User,
   Users,
 } from "lucide-react";
 
+/* ─── Nav links ────────────────────────────────────────────────────────── */
+
 const learnLinks = [
-  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "My Courses", href: "/courses", icon: BookOpen },
-  { title: "Learning Paths", href: "/learning-paths", icon: Route },
-  { title: "Certificates", href: "/certificates", icon: GraduationCap },
-  { title: "Bookmarks", href: "/bookmarks", icon: Bookmark },
-  { title: "Notifications", href: "/notifications", icon: Bell, badge: "5" },
+  { title: "Dashboard",      href: "/dashboard",      icon: LayoutDashboard },
+  { title: "My Courses",     href: "/courses",         icon: BookOpen },
+  { title: "Learning Paths", href: "/learning-paths",  icon: Route },
+  { title: "Certificates",   href: "/certificates",    icon: GraduationCap },
+  { title: "Bookmarks",      href: "/bookmarks",       icon: Bookmark },
+  { title: "Notifications",  href: "/notifications",   icon: Bell, badge: "5" },
 ];
 
 const exploreLinks = [
-  { title: "All Courses", href: "/all-courses", icon: BookOpen },
-  { title: "Explore by Role", href: "/roles", icon: Users },
-  { title: "Explore by Platform", href: "/platforms", icon: Boxes },
-  { title: "New & Trending", href: "/trending", icon: Sparkles },
-  { title: "Community", href: "/community", icon: Users },
-  { title: "News", href: "/news", icon: Newspaper },
+  { title: "All Courses",         href: "/all-courses", icon: BookOpen },
+  { title: "Explore by Role",     href: "/roles",       icon: Users },
+  { title: "Explore by Platform", href: "/platforms",   icon: Boxes },
+  { title: "New & Trending",      href: "/trending",    icon: Sparkles },
+  { title: "Community",           href: "/community",   icon: Users },
+  { title: "News",                href: "/news",        icon: Newspaper },
 ];
 
 const accountLinks = [
-  { title: "My Profile", href: "/profile", icon: User },
-  { title: "Settings", href: "/settings", icon: Settings },
-  { title: "Help & Support", href: "/help-support", icon: CircleHelp },
+  { title: "My Profile",    href: "/profile",       icon: User },
+  { title: "Settings",      href: "/settings",      icon: Settings },
+  { title: "Help & Support",href: "/help-support",  icon: CircleHelp },
 ];
+
+/* ─── NavGroup ─────────────────────────────────────────────────────────── */
 
 function NavGroup({
   title,
@@ -60,11 +64,11 @@ function NavGroup({
   const pathname = usePathname();
 
   return (
-    <div className="space-y-2">
-      <p className="px-4 text-[11px] font-bold uppercase tracking-wide text-slate-500">
+    <div>
+      <p className="mb-1.5 px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
         {title}
       </p>
-      <nav className="space-y-1">
+      <nav className="space-y-0.5">
         {links.map((link) => {
           const Icon = link.icon;
           const active = pathname === link.href;
@@ -73,16 +77,26 @@ function NavGroup({
             <Link
               key={link.href}
               href={link.href}
-              className={`flex h-10 items-center gap-3 rounded-lg px-4 text-sm font-medium transition ${
+              className={`flex h-9 items-center gap-3 rounded-lg px-3 text-sm transition-all duration-150 ${
                 active
-                  ? "bg-violet-100 text-violet-700"
-                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
+                  ? "bg-violet-600 font-semibold text-white"
+                  : "font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <Icon className="size-4" />
+              <Icon
+                className={`size-4 shrink-0 ${
+                  active ? "text-white" : "text-slate-400"
+                }`}
+              />
               <span className="min-w-0 flex-1 truncate">{link.title}</span>
               {link.badge ? (
-                <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-bold text-violet-700">
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                    active
+                      ? "bg-white/20 text-white"
+                      : "bg-violet-100 text-violet-700"
+                  }`}
+                >
                   {link.badge}
                 </span>
               ) : null}
@@ -94,99 +108,134 @@ function NavGroup({
   );
 }
 
+/* ─── Shell ─────────────────────────────────────────────────────────────── */
+
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950">
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
-        <div className="flex h-[74px] items-center gap-6 px-5 lg:px-7">
-          <Link href="/dashboard" className="flex w-[250px] items-center gap-3">
-            <div className="grid size-11 place-items-center rounded-xl bg-violet-600 text-white shadow-lg shadow-violet-200">
-              <GraduationCap className="size-6" />
+
+      {/* ── Header ─────────────────────────────────────────────────── */}
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+        <div className="flex h-16 items-center gap-4 px-5 lg:px-6">
+
+          {/* Logo */}
+          <Link
+            href="/dashboard"
+            className="flex w-[240px] shrink-0 items-center gap-3"
+          >
+            <div className="grid size-9 place-items-center rounded-xl bg-violet-600 shadow-md shadow-violet-300/40">
+              <Boxes className="size-5 text-white" />
             </div>
             <div>
-              <p className="text-xl font-black leading-none tracking-normal">
+              <p className="text-[15px] font-black leading-none tracking-tight text-slate-900">
                 LearningHub
               </p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-0.5 text-[11px] text-slate-400">
                 Powered by Kaishi Innovations
               </p>
             </div>
           </Link>
 
+          {/* Search */}
           <div className="hidden flex-1 justify-center md:flex">
-            <label className="flex h-10 w-full max-w-[520px] items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 shadow-sm">
-              <Search className="size-4 text-slate-500" />
+            <label className="flex h-9 w-full max-w-[480px] items-center gap-2.5 rounded-xl border border-slate-200 bg-slate-50 px-3.5 shadow-sm transition-all duration-200 focus-within:border-violet-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-violet-50">
+              <Search className="size-4 shrink-0 text-slate-400" />
               <input
-                className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-slate-500"
+                className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
                 placeholder="Search courses, skills or topics..."
               />
-              <span className="rounded-md border border-slate-200 px-1.5 py-0.5 text-[11px] font-semibold text-slate-400">
+              <kbd className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 shadow-sm">
                 ⌘K
-              </span>
+              </kbd>
             </label>
           </div>
 
-          <div className="ml-auto flex items-center gap-4">
+          {/* Right actions */}
+          <div className="ml-auto flex items-center gap-2.5">
+            {/* Bell */}
             <button
               type="button"
               aria-label="Notifications"
-              className="relative grid size-10 place-items-center rounded-lg text-slate-600 transition hover:bg-slate-100"
+              className="relative grid size-9 place-items-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50"
             >
-              <Bell className="size-5" />
-              <span className="absolute right-1.5 top-1.5 grid size-4 place-items-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+              <Bell className="size-4" />
+              <span className="absolute right-1.5 top-1.5 grid size-3.5 place-items-center rounded-full bg-red-500 text-[9px] font-black text-white">
                 5
               </span>
             </button>
+
+            {/* User */}
             <button
               type="button"
-              className="hidden items-center gap-3 rounded-lg px-2 py-1.5 transition hover:bg-slate-100 sm:flex"
+              className="hidden items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 shadow-sm transition hover:bg-slate-50 sm:flex"
             >
-              <div className="grid size-10 place-items-center rounded-full bg-gradient-to-br from-emerald-200 to-sky-200 text-slate-700">
-                <User className="size-5" />
+              {/* Avatar circle with gradient */}
+              <div className="grid size-8 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-violet-400 via-purple-400 to-indigo-500 text-white">
+                <User className="size-4" />
               </div>
               <span className="text-left">
-                <span className="block text-sm font-bold">John Doe</span>
-                <span className="block text-xs text-slate-500">
+                <span className="block text-xs font-bold text-slate-900">
+                  John Doe
+                </span>
+                <span className="block text-[11px] text-slate-400">
                   Software Engineer
                 </span>
               </span>
-              <ChevronDown className="size-4 text-slate-500" />
+              <ChevronDown className="size-3.5 text-slate-400" />
             </button>
           </div>
         </div>
       </header>
 
+      {/* ── Body ────────────────────────────────────────────────────── */}
       <div className="flex">
-        <aside className="sticky top-[74px] hidden h-[calc(100vh-74px)] w-[270px] shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-4 py-7 lg:block">
-          <div className="space-y-7">
-            <NavGroup title="Learn" links={learnLinks} />
+
+        {/* Sidebar */}
+        <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-[240px] shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
+          <div className="space-y-5">
+            <NavGroup title="Learn"   links={learnLinks} />
             <NavGroup title="Explore" links={exploreLinks} />
             <NavGroup title="Account" links={accountLinks} />
 
-            <div className="rounded-lg bg-violet-50 p-5">
-              <p className="text-base font-black leading-tight">
+            {/* CTA */}
+            <div className="rounded-xl bg-violet-50 p-4">
+              <p className="text-sm font-black leading-tight text-slate-900">
                 Learn together.
                 <br />
                 Grow together.
               </p>
-              <p className="mt-3 text-sm leading-5 text-slate-600">
+              <p className="mt-2 text-xs leading-relaxed text-slate-500">
                 Join discussions, share knowledge, and build your network.
               </p>
               <Link
                 href="/community"
-                className="mt-4 inline-flex h-9 items-center justify-center rounded-lg bg-violet-600 px-4 text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-violet-700"
+                className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-violet-600 text-xs font-bold text-white shadow-md shadow-violet-300/40 transition hover:bg-violet-700"
               >
+                <PenLine className="size-3.5" />
                 Create Post
               </Link>
             </div>
           </div>
         </aside>
 
+        {/* Main */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1360px]">
-            <div className="mb-6 flex flex-col gap-3 border-b border-slate-200 pb-5 md:flex-row md:items-center md:justify-between">
-              <div className="flex items-center gap-2 text-sm font-bold text-violet-700">
-                <ShieldCheck className="size-4" />
+          <div className="mx-auto max-w-340">
+            {/* "Registered users only" badge — kept as original requested */}
+            <div className="mb-5 flex items-center justify-end">
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-3.5"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
                 This section is available only for registered users.
               </div>
             </div>

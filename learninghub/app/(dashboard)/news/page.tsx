@@ -1,634 +1,689 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
+  AlertCircle,
   Bookmark,
+  BookmarkCheck,
   ChevronLeft,
   ChevronRight,
   Clock,
   ExternalLink,
-  Eye,
-  MessageCircle,
-  RefreshCw,
+  Hash,
+  Loader2,
+  MessageSquare,
+  RefreshCcw,
   Search,
   Sparkles,
+  ThumbsUp,
   TrendingUp,
+  X,
   Zap,
 } from "lucide-react";
 import { SiReddit } from "react-icons/si";
 
-const STORAGE_KEY = "learninghub:saved-reddit-posts";
-const POSTS_PER_PAGE = 4;
-
-const topics = [
-  "All",
-  "Programming",
-  "Web Dev",
-  "AI",
-  "Learning",
-  "Career",
-  "Games",
-];
-
-const topicColors: Record<string, string> = {
-  All:         "from-violet-500 to-indigo-500",
-  Programming: "from-blue-500 to-cyan-500",
-  "Web Dev":   "from-emerald-500 to-teal-500",
-  AI:          "from-fuchsia-500 to-purple-500",
-  Learning:    "from-amber-500 to-orange-500",
-  Career:      "from-rose-500 to-pink-500",
-  Games:       "from-lime-500 to-green-500",
-};
-
-const topicBadge: Record<string, string> = {
-  All:         "bg-violet-100 text-violet-700 border-violet-200",
-  Programming: "bg-blue-100 text-blue-700 border-blue-200",
-  "Web Dev":   "bg-emerald-100 text-emerald-700 border-emerald-200",
-  AI:          "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200",
-  Learning:    "bg-amber-100 text-amber-700 border-amber-200",
-  Career:      "bg-rose-100 text-rose-700 border-rose-200",
-  Games:       "bg-lime-100 text-lime-700 border-lime-200",
-};
-
-const redditPosts = [
-  {
-    id: "reddit-games-devvit",
-    title: "Launching a LearningHub app with Devvit",
-    summary:
-      "A developer thread about setting up a Reddit app, starting a playtest session, and building community features.",
-    subreddit: "r/GamesOnReddit",
-    time: "Now",
-    upvotes: "1.8k",
-    comments: "246",
-    topic: "Games",
-    url: "https://www.reddit.com/r/GamesOnReddit/",
-  },
-  {
-    id: "reddit-programming-ai-assistant",
-    title: "What's your go-to AI coding assistant?",
-    summary:
-      "Developers compare AI coding tools, IDE workflows, code review help, and productivity habits for 2026.",
-    subreddit: "r/programming",
-    time: "8h ago",
-    upvotes: "4.2k",
-    comments: "613",
-    topic: "AI",
-    url: "https://www.reddit.com/r/programming/",
-  },
-  {
-    id: "reddit-webdev-nextjs-roadmap",
-    title: "Best roadmap for learning modern Next.js?",
-    summary:
-      "Frontend developers share project ideas, docs, and practice paths for learning current Next.js patterns.",
-    subreddit: "r/webdev",
-    time: "12h ago",
-    upvotes: "987",
-    comments: "132",
-    topic: "Web Dev",
-    url: "https://www.reddit.com/r/webdev/",
-  },
-  {
-    id: "reddit-learnprogramming-api-auth",
-    title: "How do you practice API authentication safely?",
-    summary:
-      "Learners discuss JWTs, session auth, OAuth, refresh tokens, and small projects that make auth concepts stick.",
-    subreddit: "r/learnprogramming",
-    time: "14h ago",
-    upvotes: "742",
-    comments: "88",
-    topic: "Learning",
-    url: "https://www.reddit.com/r/learnprogramming/",
-  },
-  {
-    id: "reddit-cscareerquestions-portfolio",
-    title: "Portfolio projects that helped you get interviews",
-    summary:
-      "Engineers share practical portfolio ideas, how they wrote case studies, and what recruiters actually noticed.",
-    subreddit: "r/cscareerquestions",
-    time: "16h ago",
-    upvotes: "2.1k",
-    comments: "301",
-    topic: "Career",
-    url: "https://www.reddit.com/r/cscareerquestions/",
-  },
-  {
-    id: "reddit-reactjs-state-management",
-    title: "What are teams using for state management now?",
-    summary:
-      "React developers compare server state, local state, URL state, and when a dedicated store is still worth it.",
-    subreddit: "r/reactjs",
-    time: "18h ago",
-    upvotes: "1.2k",
-    comments: "175",
-    topic: "Web Dev",
-    url: "https://www.reddit.com/r/reactjs/",
-  },
-  {
-    id: "reddit-nextjs-app-router",
-    title: "Lessons learned after shipping with the App Router",
-    summary:
-      "A practical thread about route groups, server components, caching, data loading, and deployment surprises.",
-    subreddit: "r/nextjs",
-    time: "1d ago",
-    upvotes: "856",
-    comments: "119",
-    topic: "Web Dev",
-    url: "https://www.reddit.com/r/nextjs/",
-  },
-  {
-    id: "reddit-machinelearning-agents",
-    title: "What makes AI agents useful for real developer work?",
-    summary:
-      "Machine learning practitioners discuss evaluation, tool use, memory, reliability, and where agents still fail.",
-    subreddit: "r/MachineLearning",
-    time: "1d ago",
-    upvotes: "3.6k",
-    comments: "524",
-    topic: "AI",
-    url: "https://www.reddit.com/r/MachineLearning/",
-  },
-  {
-    id: "reddit-devops-kubernetes",
-    title: "Kubernetes mistakes you only learn in production",
-    summary:
-      "DevOps engineers share lessons about observability, resource limits, rollouts, secrets, and cluster cost control.",
-    subreddit: "r/devops",
-    time: "2d ago",
-    upvotes: "1.5k",
-    comments: "227",
-    topic: "Programming",
-    url: "https://www.reddit.com/r/devops/",
-  },
-  {
-    id: "reddit-programming-side-projects",
-    title: "Small side projects that made you a better programmer",
-    summary:
-      "A lively discussion about tiny apps, games, scripts, and tools that build confidence through repetition.",
-    subreddit: "r/programming",
-    time: "2d ago",
-    upvotes: "5.8k",
-    comments: "711",
-    topic: "Programming",
-    url: "https://www.reddit.com/r/programming/",
-  },
-  {
-    id: "reddit-webdev-css-layouts",
-    title: "CSS layouts that still trip people up",
-    summary:
-      "Web developers share debugging tips for grids, sticky sidebars, overflow, responsive cards, and mobile tables.",
-    subreddit: "r/webdev",
-    time: "3d ago",
-    upvotes: "1.1k",
-    comments: "204",
-    topic: "Web Dev",
-    url: "https://www.reddit.com/r/webdev/",
-  },
-  {
-    id: "reddit-learnprogramming-study-plan",
-    title: "How would you study programming for 90 days?",
-    summary:
-      "Mentors suggest study plans that balance fundamentals, projects, reading code, debugging, and consistent review.",
-    subreddit: "r/learnprogramming",
-    time: "3d ago",
-    upvotes: "2.9k",
-    comments: "386",
-    topic: "Learning",
-    url: "https://www.reddit.com/r/learnprogramming/",
-  },
-];
-
-type RedditPost = (typeof redditPosts)[number];
-
-function shufflePosts(posts: RedditPost[]) {
-  return [...posts].sort(() => Math.random() - 0.5);
+/* ─── Types ──────────────────────────────────────────────────────── */
+export interface RedditPost {
+  id: string;
+  title: string;
+  summary: string;
+  subreddit: string;
+  time: string;
+  upvotes: string;
+  comments: string;
+  topic: string;
+  url: string;
 }
 
-function loadSavedPosts() {
+type TopicKey =
+  | "All"
+  | "Programming"
+  | "Web Dev"
+  | "AI"
+  | "Learning"
+  | "Career"
+  | "Games";
+
+/* ─── Constants ──────────────────────────────────────────────────── */
+const STORAGE_KEY = "learninghub:saved-reddit-v2";
+const PER_PAGE    = 5;
+const TOPICS: TopicKey[] = [
+  "All", "Programming", "Web Dev", "AI", "Learning", "Career", "Games",
+];
+
+const TOPIC_THUMB: Record<TopicKey, { bg: string; accent: string }> = {
+  All:         { bg: "#1e1b4b", accent: "#a5b4fc" },
+  Programming: { bg: "#0c1a2e", accent: "#38bdf8" },
+  "Web Dev":   { bg: "#052e16", accent: "#4ade80" },
+  AI:          { bg: "#1e0b3a", accent: "#d8b4fe" },
+  Learning:    { bg: "#1c1004", accent: "#fbbf24" },
+  Career:      { bg: "#2d0a0a", accent: "#f87171" },
+  Games:       { bg: "#0a1f0a", accent: "#86efac" },
+};
+
+const TOPIC_BADGE: Record<TopicKey, string> = {
+  All:         "bg-violet-50 text-violet-600 border-violet-100",
+  Programming: "bg-sky-50 text-sky-600 border-sky-100",
+  "Web Dev":   "bg-emerald-50 text-emerald-600 border-emerald-100",
+  AI:          "bg-purple-50 text-purple-600 border-purple-100",
+  Learning:    "bg-amber-50 text-amber-600 border-amber-100",
+  Career:      "bg-rose-50 text-rose-600 border-rose-100",
+  Games:       "bg-lime-50 text-lime-600 border-lime-100",
+};
+
+/* ─── Local storage helpers ─────────────────────────────────────── */
+function loadSaved(): string[] {
   if (typeof window === "undefined") return [];
   try {
-    const saved = window.localStorage.getItem(STORAGE_KEY);
-    return saved ? (JSON.parse(saved) as string[]) : [];
+    const s = localStorage.getItem(STORAGE_KEY);
+    return s ? (JSON.parse(s) as string[]) : [];
   } catch {
     return [];
   }
 }
 
+/* ─── Skeleton card ─────────────────────────────────────────────── */
+function SkeletonCard() {
+  return (
+    <div className="flex animate-pulse gap-4 rounded-2xl border border-slate-200 bg-white p-4">
+      <div className="size-[72px] shrink-0 rounded-xl bg-slate-200" />
+      <div className="flex-1 space-y-2.5 py-1">
+        <div className="h-4 w-3/4 rounded-lg bg-slate-200" />
+        <div className="h-3 w-full rounded-lg bg-slate-100" />
+        <div className="h-3 w-1/2 rounded-lg bg-slate-100" />
+        <div className="mt-3 flex gap-3">
+          <div className="h-5 w-16 rounded-full bg-slate-100" />
+          <div className="h-5 w-12 rounded-full bg-slate-100" />
+          <div className="ml-auto h-5 w-20 rounded-full bg-slate-100" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Reddit thumbnail chip ─────────────────────────────────────── */
+function RedditThumb({ topic }: { topic: string }) {
+  const key = (TOPICS.includes(topic as TopicKey) ? topic : "All") as TopicKey;
+  const { bg, accent } = TOPIC_THUMB[key];
+  return (
+    <div
+      className="flex size-[72px] shrink-0 flex-col items-center justify-center gap-1 rounded-xl"
+      style={{ background: bg }}
+    >
+      <SiReddit style={{ color: accent, fontSize: 30 }} />
+      <span
+        className="text-[9px] font-bold tracking-wide"
+        style={{ color: accent, opacity: 0.75 }}
+      >
+        Reddit
+      </span>
+    </div>
+  );
+}
+
+/* ─── Main Page ─────────────────────────────────────────────────── */
 export default function NewsPage() {
-  const [activeTopic, setActiveTopic] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [savedIds, setSavedIds] = useState<string[]>(loadSavedPosts);
-  const [suggestedPosts, setSuggestedPosts] = useState(() =>
-    typeof window === "undefined" ? redditPosts : shufflePosts(redditPosts),
-  );
-  const [searchQuery, setSearchQuery] = useState("");
+  /* State */
+  const [allPosts, setAllPosts]       = useState<RedditPost[]>([]);
+  const [loading, setLoading]         = useState(true);
+  const [error, setError]             = useState("");
+  const [activeTopic, setActiveTopic] = useState<TopicKey>("All");
+  const [page, setPage]               = useState(1);
+  const [savedIds, setSavedIds]       = useState<string[]>(loadSaved);
+  const [query, setQuery]             = useState("");
+  const [searchMode, setSearchMode]   = useState(false); // true = results are from search
+  const [refreshing, setRefreshing]   = useState(false);
 
-  const filteredPosts = useMemo(() => {
-    let posts = activeTopic === "All"
-      ? suggestedPosts
-      : suggestedPosts.filter((p) => p.topic === activeTopic);
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      posts = posts.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.subreddit.toLowerCase().includes(q) ||
-          p.topic.toLowerCase().includes(q),
-      );
-    }
-    return posts;
-  }, [activeTopic, suggestedPosts, searchQuery]);
+  /* Debounce ref for search */
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const pageCount = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
-  const visiblePosts = filteredPosts.slice(
-    (currentPage - 1) * POSTS_PER_PAGE,
-    currentPage * POSTS_PER_PAGE,
-  );
-  const savedPosts = redditPosts.filter((post) => savedIds.includes(post.id));
-
+  /* Persist saved IDs */
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(savedIds));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedIds));
   }, [savedIds]);
 
+  /* ── Fetch helpers ─────────────────────────────────────────────── */
+  const fetchHot = useCallback(async (fresh = false) => {
+    setLoading(true);
+    setError("");
+    setSearchMode(false);
+    try {
+      const url = `/api/reddit?mode=hot${fresh ? "&fresh=1" : ""}`;
+      const res  = await fetch(url);
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Failed to fetch");
+      setAllPosts(json.posts as RedditPost[]);
+      setPage(1);
+    } catch (e: any) {
+      setError(e.message ?? "Something went wrong");
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  const fetchSearch = useCallback(async (q: string) => {
+    if (!q.trim()) { fetchHot(); return; }
+    setLoading(true);
+    setError("");
+    setSearchMode(true);
+    try {
+      const res  = await fetch(`/api/reddit?mode=search&q=${encodeURIComponent(q)}`);
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Search failed");
+      setAllPosts(json.posts as RedditPost[]);
+      setPage(1);
+    } catch (e: any) {
+      setError(e.message ?? "Search failed");
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchHot]);
+
+  /* Initial load */
+  useEffect(() => { fetchHot(); }, [fetchHot]);
+
+  /* Debounced search — fires 650 ms after user stops typing */
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (!query.trim()) {
+      if (searchMode) fetchHot();
+      return;
+    }
+    debounceRef.current = setTimeout(() => fetchSearch(query), 650);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  /* Refresh */
+  function handleRefresh() {
+    setRefreshing(true);
+    setQuery("");
+    setActiveTopic("All");
+    fetchHot(true);
+  }
+
+  /* Bookmark toggle */
   function toggleSaved(id: string) {
-    setSavedIds((current) =>
-      current.includes(id)
-        ? current.filter((savedId) => savedId !== id)
-        : [...current, id],
-    );
+    setSavedIds((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
   }
 
-  function refreshSuggestions() {
-    setSuggestedPosts(shufflePosts(redditPosts));
-    setCurrentPage(1);
+  /* ── Filtered / paginated posts ───────────────────────────────── */
+  const filtered =
+    activeTopic === "All"
+      ? allPosts
+      : allPosts.filter((p) => p.topic === activeTopic);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const visible   = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const savedPosts = allPosts.filter((p) => savedIds.includes(p.id));
+
+  /* Topic counts (from current post set) */
+  const topicCounts = TOPICS.reduce<Record<string, number>>((acc, t) => {
+    acc[t] = t === "All"
+      ? allPosts.length
+      : allPosts.filter((p) => p.topic === t).length;
+    return acc;
+  }, {});
+
+  function changeTopic(t: TopicKey) {
+    setActiveTopic(t);
+    setPage(1);
   }
 
-  function changeTopic(topic: string) {
-    setActiveTopic(topic);
-    setCurrentPage(1);
-  }
-
+  /* ── Render ─────────────────────────────────────────────────── */
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
 
-      {/* ── Hero Header ── */}
-      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-violet-950 to-indigo-950 px-8 py-10 shadow-2xl shadow-violet-900/30">
-        {/* decorative blobs */}
-        <div className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-violet-500/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-10 left-10 size-48 rounded-full bg-orange-500/15 blur-3xl" />
-
-        <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-300">
-              <SiReddit className="size-3.5" />
-              Live Reddit Feed
-            </div>
-            <h1 className="text-4xl font-black tracking-tight text-white">
-              Reddit Watch
-            </h1>
-            <p className="mt-2 max-w-lg text-sm leading-relaxed text-slate-300">
-              Discover handpicked Reddit discussions worth reading. Save threads,
-              filter by topic, and browse fresh picks on every refresh.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={refreshSuggestions}
-            className="group inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/10 px-5 text-sm font-bold text-white backdrop-blur-sm transition hover:border-white/20 hover:bg-white/20 active:scale-95"
-          >
-            <RefreshCw className="size-4 transition group-hover:rotate-180 duration-500" />
-            New Suggestions
-          </button>
+      {/* Page header */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Reddit Watch</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            {searchMode
+              ? `Search results for "${query}"`
+              : "Live Reddit threads from top tech communities · refreshes on demand"}
+          </p>
         </div>
+        <button
+          type="button"
+          onClick={handleRefresh}
+          disabled={refreshing || loading}
+          className="group inline-flex h-9 shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-60 active:scale-95"
+        >
+          <RefreshCcw
+            className={`size-3.5 ${refreshing ? "animate-spin" : "transition-transform duration-500 group-hover:rotate-180"}`}
+          />
+          {refreshing ? "Refreshing…" : "New posts"}
+        </button>
+      </div>
 
-        {/* stat chips */}
-        <div className="relative mt-7 flex flex-wrap gap-3">
-          {[
-            { icon: TrendingUp, label: `${redditPosts.length} posts`, color: "text-violet-300" },
-            { icon: Sparkles, label: `${topics.length - 1} topics`, color: "text-orange-300" },
-            { icon: Bookmark, label: `${savedIds.length} saved`, color: "text-sky-300" },
-          ].map(({ icon: Icon, label, color }) => (
-            <span
-              key={label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/70"
-            >
-              <Icon className={`size-3.5 ${color}`} />
-              {label}
-            </span>
-          ))}
-        </div>
-      </section>
+      {/* Main grid */}
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
 
-      {/* ── Main Grid ── */}
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+        {/* ── LEFT: Feed ─────────────────────────────────────────── */}
+        <div className="space-y-3">
 
-        {/* ── Left: Feed ── */}
-        <div className="space-y-4">
-
-          {/* Filter + Search bar */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-100">
+          {/* Filter + search bar */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             {/* Topic pills */}
             <div className="flex flex-wrap gap-2">
-              {topics.map((topic) => {
+              {TOPICS.map((topic) => {
                 const active = activeTopic === topic;
                 return (
                   <button
                     key={topic}
                     type="button"
                     onClick={() => changeTopic(topic)}
-                    className={`h-8 rounded-full px-4 text-xs font-bold transition-all duration-200 ${
+                    className={`h-8 rounded-full px-4 text-xs font-semibold transition-all duration-200 ${
                       active
-                        ? `bg-gradient-to-r ${topicColors[topic]} text-white shadow-md shadow-violet-200`
-                        : "border border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100"
+                        ? "bg-violet-600 text-white shadow-md shadow-violet-200"
+                        : "border border-slate-200 bg-white text-slate-600 hover:border-violet-200 hover:text-violet-600"
                     }`}
                   >
                     {topic}
+                    {!loading && topicCounts[topic] > 0 && !active && (
+                      <span className="ml-1.5 text-slate-400">
+                        {topicCounts[topic]}
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
 
             {/* Search */}
-            <label className="mt-4 flex h-11 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 transition focus-within:border-violet-300 focus-within:bg-white focus-within:ring-4 focus-within:ring-violet-50">
-              <Search className="size-4 shrink-0 text-slate-400" />
+            <label className="mt-3 flex h-10 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3.5 transition-all duration-200 focus-within:border-violet-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-violet-50">
+              {loading && query ? (
+                <Loader2 className="size-4 shrink-0 animate-spin text-violet-400" />
+              ) : (
+                <Search className="size-4 shrink-0 text-slate-400" />
+              )}
               <input
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                value={query}
+                onChange={(e) => { setQuery(e.target.value); setPage(1); }}
                 className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
-                placeholder="Search subreddits, posts or topics…"
+                placeholder="Search Reddit — type to find live posts…"
               />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => { setQuery(""); setPage(1); }}
+                  className="text-slate-400 transition hover:text-slate-600"
+                >
+                  <X className="size-3.5" />
+                </button>
+              )}
             </label>
 
-            {/* Results count */}
-            <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-              <span className="font-medium">
-                {filteredPosts.length} thread{filteredPosts.length !== 1 ? "s" : ""} found
-              </span>
-              <span className="font-semibold">
-                Page {currentPage} / {pageCount}
-              </span>
-            </div>
+            {/* Meta row */}
+            {!loading && (
+              <div className="mt-2.5 flex items-center justify-between text-xs text-slate-400">
+                <span>
+                  <span className="font-semibold text-slate-600">{filtered.length}</span>{" "}
+                  {searchMode ? "results" : "threads"} · {allPosts.length} loaded
+                </span>
+                <span>Page {page} / {pageCount}</span>
+              </div>
+            )}
           </div>
 
-          {/* Post cards */}
-          <div className="space-y-3">
-            {visiblePosts.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center">
-                <p className="text-sm font-semibold text-slate-400">No posts match your filters.</p>
+          {/* Error state */}
+          {error && !loading && (
+            <div className="flex items-start gap-3 rounded-2xl border border-red-100 bg-red-50 p-4">
+              <AlertCircle className="mt-0.5 size-5 shrink-0 text-red-500" />
+              <div>
+                <p className="text-sm font-semibold text-red-700">{error}</p>
+                <button
+                  type="button"
+                  onClick={handleRefresh}
+                  className="mt-1 text-xs font-semibold text-red-500 underline hover:text-red-700"
+                >
+                  Try again
+                </button>
               </div>
-            ) : (
-              visiblePosts.map((post) => {
+            </div>
+          )}
+
+          {/* Loading skeletons */}
+          {loading && (
+            <div className="space-y-3">
+              {Array.from({ length: PER_PAGE }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          )}
+
+          {/* Empty state */}
+          {!loading && !error && visible.length === 0 && (
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center">
+              <div className="grid size-12 place-items-center rounded-xl bg-slate-100">
+                <Search className="size-5 text-slate-400" />
+              </div>
+              <p className="text-sm font-semibold text-slate-500">No threads found</p>
+              <p className="text-xs text-slate-400">Try a different topic or search term</p>
+            </div>
+          )}
+
+          {/* Post cards */}
+          {!loading && !error && visible.length > 0 && (
+            <div className="space-y-3">
+              {visible.map((post) => {
                 const saved = savedIds.includes(post.id);
-                const badge = topicBadge[post.topic] ?? "bg-slate-100 text-slate-600 border-slate-200";
+                const key   = (TOPICS.includes(post.topic as TopicKey)
+                  ? post.topic
+                  : "All") as TopicKey;
+                const badge = TOPIC_BADGE[key] ?? "bg-slate-50 text-slate-500 border-slate-200";
 
                 return (
                   <article
                     key={post.id}
-                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md hover:shadow-violet-100"
+                    className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-200 hover:shadow-md hover:shadow-violet-100/50"
                   >
-                    {/* subtle left accent */}
-                    <div className="absolute inset-y-0 left-0 w-1 rounded-l-2xl bg-gradient-to-b from-orange-400 to-rose-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                    {/* Topic thumbnail */}
+                    <RedditThumb topic={post.topic} />
 
-                    <div className="flex gap-4">
-                      {/* Reddit icon */}
-                      <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-orange-100 to-red-100 text-orange-500 shadow-inner">
-                        <SiReddit className="size-7" />
-                      </div>
+                    {/* Content */}
+                    <div className="min-w-0 flex-1">
+                      <h2 className="line-clamp-2 text-[15px] font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-violet-700">
+                        {post.title}
+                      </h2>
+                      <p className="mt-1 line-clamp-1 text-xs leading-relaxed text-slate-500">
+                        {post.summary}
+                      </p>
 
-                      {/* Content */}
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-2 text-xs">
-                          <span className="font-bold text-orange-500">{post.subreddit}</span>
-                          <span className="text-slate-300">•</span>
-                          <span className="inline-flex items-center gap-1 text-slate-400">
-                            <Clock className="size-3" />
-                            {post.time}
+                      {/* Meta row */}
+                      <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                        <span className="inline-flex items-center gap-1.5 text-xs">
+                          <SiReddit className="size-3 text-orange-400" />
+                          <span className="font-semibold text-orange-500">
+                            {post.subreddit}
                           </span>
-                          <span className={`ml-auto rounded-full border px-2.5 py-0.5 text-xs font-bold ${badge}`}>
-                            {post.topic}
-                          </span>
-                        </div>
+                        </span>
 
-                        <h2 className="mt-2 text-[15px] font-black leading-snug text-slate-900 transition group-hover:text-violet-700">
-                          {post.title}
-                        </h2>
-                        <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
-                          {post.summary}
-                        </p>
+                        <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                          <Clock className="size-3" />
+                          {post.time}
+                        </span>
 
-                        <div className="mt-4 flex flex-wrap items-center gap-5">
-                          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-                            <TrendingUp className="size-3.5 text-orange-400" />
-                            {post.upvotes} upvotes
+                        <span
+                          className={`rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${badge}`}
+                        >
+                          {post.topic}
+                        </span>
+
+                        <div className="ml-auto flex items-center gap-3">
+                          <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                            <ThumbsUp className="size-3" />
+                            {post.upvotes}
                           </span>
-                          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-                            <MessageCircle className="size-3.5 text-violet-400" />
-                            {post.comments} comments
+                          <span className="inline-flex items-center gap-1 text-xs text-slate-400">
+                            <MessageSquare className="size-3" />
+                            {post.comments}
                           </span>
                           <a
                             href={post.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="ml-auto inline-flex items-center gap-1.5 rounded-lg bg-violet-50 px-3 py-1.5 text-xs font-bold text-violet-700 transition hover:bg-violet-100"
+                            className="inline-flex items-center gap-1 text-xs font-semibold text-violet-600 transition-colors hover:text-violet-700"
                           >
-                            View thread
+                            View
                             <ExternalLink className="size-3" />
                           </a>
                         </div>
                       </div>
-
-                      {/* Bookmark */}
-                      <button
-                        type="button"
-                        aria-pressed={saved}
-                        aria-label={`${saved ? "Remove saved" : "Save"} ${post.title}`}
-                        onClick={() => toggleSaved(post.id)}
-                        className={`grid size-9 shrink-0 place-items-center rounded-xl transition-all duration-200 ${
-                          saved
-                            ? "bg-violet-100 text-violet-600 shadow-sm shadow-violet-200"
-                            : "text-slate-400 hover:bg-slate-100 hover:text-violet-600"
-                        }`}
-                      >
-                        <Bookmark
-                          className="size-4"
-                          fill={saved ? "currentColor" : "none"}
-                        />
-                      </button>
                     </div>
+
+                    {/* Bookmark */}
+                    <button
+                      type="button"
+                      aria-pressed={saved}
+                      aria-label={`${saved ? "Remove" : "Save"} ${post.title}`}
+                      onClick={() => toggleSaved(post.id)}
+                      className={`grid size-8 shrink-0 self-start place-items-center rounded-xl transition-all duration-200 ${
+                        saved
+                          ? "bg-violet-100 text-violet-600"
+                          : "text-slate-300 hover:bg-slate-100 hover:text-violet-500"
+                      }`}
+                    >
+                      {saved ? (
+                        <BookmarkCheck className="size-4" />
+                      ) : (
+                        <Bookmark className="size-4" />
+                      )}
+                    </button>
                   </article>
                 );
-              })
-            )}
-          </div>
-
-          {/* Pagination */}
-          <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm shadow-slate-100">
-            <p className="text-xs font-semibold text-slate-500">
-              Showing <span className="text-slate-800">{visiblePosts.length}</span> of{" "}
-              <span className="text-slate-800">{filteredPosts.length}</span> posts
-            </p>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                data-testid="reddit-page-previous"
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-slate-200 px-3.5 text-xs font-bold text-slate-700 transition hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                <ChevronLeft className="size-4" />
-                Previous
-              </button>
-
-              {/* page dots */}
-              <div className="flex items-center gap-1">
-                {Array.from({ length: pageCount }).map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setCurrentPage(i + 1)}
-                    className={`size-2 rounded-full transition-all duration-200 ${
-                      currentPage === i + 1
-                        ? "w-5 bg-violet-600"
-                        : "bg-slate-300 hover:bg-slate-400"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                data-testid="reddit-page-next"
-                onClick={() => setCurrentPage((p) => Math.min(pageCount, p + 1))}
-                disabled={currentPage === pageCount}
-                className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-3.5 text-xs font-bold text-white shadow-md shadow-violet-200 transition hover:from-violet-700 hover:to-indigo-700 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Next
-                <ChevronRight className="size-4" />
-              </button>
+              })}
             </div>
-          </div>
+          )}
+
+          {/* Pagination — up to 10 pages */}
+          {!loading && pageCount > 1 && (
+            <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-5 py-3.5">
+              <p className="text-xs text-slate-500">
+                Showing{" "}
+                <span className="font-semibold text-slate-700">{visible.length}</span>{" "}
+                of{" "}
+                <span className="font-semibold text-slate-700">{filtered.length}</span>{" "}
+                posts
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  data-testid="reddit-page-previous"
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="inline-flex h-8 items-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-semibold text-slate-600 transition hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <ChevronLeft className="size-3.5" />
+                  Prev
+                </button>
+
+                {/* Page dots / numbers — cap at 10 */}
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: Math.min(pageCount, 10) }).map((_, i) => {
+                    const p = i + 1;
+                    const isCur = page === p;
+                    return (
+                      <button
+                        key={p}
+                        type="button"
+                        onClick={() => setPage(p)}
+                        className={`rounded-full text-[10px] font-bold transition-all duration-200 ${
+                          isCur
+                            ? "size-6 bg-violet-600 text-white"
+                            : "size-6 bg-slate-100 text-slate-500 hover:bg-slate-200"
+                        }`}
+                      >
+                        {p}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  data-testid="reddit-page-next"
+                  onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                  disabled={page === pageCount}
+                  className="inline-flex h-8 items-center gap-1 rounded-lg bg-violet-600 px-3 text-xs font-semibold text-white transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  Next
+                  <ChevronRight className="size-3.5" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* ── Right Sidebar ── */}
-        <aside className="space-y-5">
+        {/* ── RIGHT: Sidebar ─────────────────────────────────────── */}
+        <aside className="space-y-4">
 
-          {/* Saved Posts */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-100">
-            <div className="flex items-center gap-3">
-              <div className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 text-violet-700 shadow-inner">
-                <Bookmark className="size-5" />
+          {/* Saved threads */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="grid size-9 place-items-center rounded-xl bg-violet-600 shadow-md shadow-violet-200">
+                <BookmarkCheck className="size-4 text-white" />
               </div>
               <div>
-                <h2 className="text-base font-black text-slate-900">Saved Threads</h2>
-                <p className="text-xs text-slate-500">
+                <h2 className="text-sm font-bold text-slate-900">Saved Threads</h2>
+                <p className="text-xs text-slate-400">
                   {savedPosts.length} post{savedPosts.length !== 1 ? "s" : ""} bookmarked
                 </p>
               </div>
             </div>
 
-            <div className="mt-4 space-y-2">
-              {savedPosts.length > 0 ? (
-                savedPosts.map((post) => (
-                  <a
-                    key={post.id}
-                    href={post.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3 transition hover:border-violet-200 hover:bg-violet-50"
-                  >
-                    <div className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-orange-100 text-orange-500">
-                      <SiReddit className="size-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="line-clamp-2 text-xs font-bold leading-5 text-slate-800 group-hover:text-violet-700">
-                        {post.title}
-                      </p>
-                      <p className="mt-0.5 text-xs text-slate-400">{post.subreddit}</p>
-                    </div>
-                  </a>
-                ))
-              ) : (
-                <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-slate-200 py-8 text-center">
-                  <Bookmark className="size-7 text-slate-300" />
-                  <p className="text-xs leading-5 text-slate-400">
-                    Bookmark posts to save them here permanently.
-                  </p>
+            {savedPosts.length > 0 ? (
+              <div className="space-y-2">
+                {savedPosts.map((post) => {
+                  const key = (TOPICS.includes(post.topic as TopicKey)
+                    ? post.topic
+                    : "All") as TopicKey;
+                  const { bg, accent } = TOPIC_THUMB[key];
+                  return (
+                    <a
+                      key={post.id}
+                      href={post.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-start gap-2.5 rounded-xl border border-slate-100 bg-slate-50 p-3 transition-all hover:border-violet-200 hover:bg-violet-50"
+                    >
+                      <div
+                        className="grid size-8 shrink-0 place-items-center rounded-lg"
+                        style={{ background: bg }}
+                      >
+                        <SiReddit className="size-4" style={{ color: accent }} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="line-clamp-2 text-xs font-semibold leading-4 text-slate-800 group-hover:text-violet-700">
+                          {post.title}
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-slate-400">
+                          {post.subreddit}
+                        </p>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-2.5 rounded-xl border border-dashed border-slate-200 py-8 text-center">
+                <div className="grid size-10 place-items-center rounded-xl bg-slate-100">
+                  <Bookmark className="size-5 text-slate-300" />
                 </div>
-              )}
-            </div>
+                <p className="text-xs leading-relaxed text-slate-400">
+                  Bookmark threads to save them here.
+                </p>
+              </div>
+            )}
           </div>
 
-          {/* Topics overview */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-100">
-            <h2 className="text-base font-black text-slate-900">Browse Topics</h2>
-            <p className="mt-0.5 text-xs text-slate-400">Filter the feed by category</p>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {topics.filter((t) => t !== "All").map((topic) => {
-                const count = redditPosts.filter((p) => p.topic === topic).length;
+          {/* Browse topics */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-4 flex items-center gap-2">
+              <Hash className="size-4 text-slate-400" />
+              <h2 className="text-sm font-bold text-slate-900">Browse Topics</h2>
+            </div>
+            <div className="space-y-1.5">
+              {TOPICS.filter((t) => t !== "All").map((topic) => {
+                const count  = topicCounts[topic] ?? 0;
                 const active = activeTopic === topic;
+                const badge  = TOPIC_BADGE[topic];
                 return (
                   <button
                     key={topic}
                     type="button"
                     onClick={() => changeTopic(topic)}
-                    className={`flex flex-col items-start gap-0.5 rounded-xl border p-3 text-left transition-all duration-150 ${
+                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left transition-all ${
                       active
-                        ? "border-violet-200 bg-violet-50"
-                        : "border-slate-100 bg-slate-50 hover:border-slate-200 hover:bg-slate-100"
+                        ? "border border-violet-200 bg-violet-50"
+                        : "border border-transparent hover:bg-slate-50"
                     }`}
                   >
-                    <span className={`text-xs font-black ${active ? "text-violet-700" : "text-slate-700"}`}>
+                    <span
+                      className={`text-xs font-semibold ${
+                        active ? "text-violet-700" : "text-slate-700"
+                      }`}
+                    >
                       {topic}
                     </span>
-                    <span className="text-xs text-slate-400">{count} post{count !== 1 ? "s" : ""}</span>
+                    {loading ? (
+                      <div className="h-4 w-6 animate-pulse rounded-full bg-slate-200" />
+                    ) : (
+                      <span
+                        className={`rounded-full border px-2 py-0.5 text-[11px] font-semibold ${badge}`}
+                      >
+                        {count}
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* CTA card */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-violet-950 to-indigo-950 p-5 text-white shadow-xl shadow-violet-900/20">
-            <div className="pointer-events-none absolute -right-8 -top-8 size-40 rounded-full bg-violet-500/20 blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-6 left-4 size-28 rounded-full bg-orange-500/15 blur-2xl" />
-
-            <div className="relative">
-              <div className="mb-4 grid size-12 place-items-center rounded-2xl bg-white/10 backdrop-blur-sm">
-                <Zap className="size-6 text-orange-300" />
-              </div>
-              <h2 className="text-lg font-black">Shuffle the feed</h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                Each shuffle picks a fresh random order. Use{" "}
-                <span className="font-bold text-white">Next</span> to browse the
-                current batch, or reshuffle for a whole new set.
-              </p>
-              <button
-                type="button"
-                onClick={refreshSuggestions}
-                className="mt-5 inline-flex h-10 items-center gap-2 rounded-xl bg-gradient-to-r from-orange-400 to-rose-500 px-5 text-sm font-black text-white shadow-lg shadow-orange-900/30 transition hover:from-orange-500 hover:to-rose-600 active:scale-95"
-              >
-                <RefreshCw className="size-4" />
-                Shuffle Posts
-              </button>
+          {/* Feed stats */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-4 flex items-center gap-2">
+              <TrendingUp className="size-4 text-rose-500" />
+              <h2 className="text-sm font-bold text-slate-900">Feed Stats</h2>
+            </div>
+            <div className="space-y-3">
+              {[
+                {
+                  label: "Posts loaded",
+                  value: loading ? "—" : allPosts.length,
+                  icon: Sparkles,
+                  color: "text-violet-500",
+                },
+                {
+                  label: "Topics",
+                  value: loading ? "—" : TOPICS.length - 1,
+                  icon: Hash,
+                  color: "text-sky-500",
+                },
+                {
+                  label: "Saved",
+                  value: savedPosts.length,
+                  icon: BookmarkCheck,
+                  color: "text-emerald-500",
+                },
+              ].map(({ label, value, icon: Icon, color }) => (
+                <div key={label} className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-2 text-xs text-slate-500">
+                    <Icon className={`size-3.5 ${color}`} />
+                    {label}
+                  </span>
+                  <span className="text-sm font-bold text-slate-800">{value}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Eye candy tip */}
-          <div className="flex items-start gap-3 rounded-2xl border border-sky-100 bg-sky-50 p-4">
-            <Eye className="mt-0.5 size-5 shrink-0 text-sky-500" />
-            <div>
-              <p className="text-xs font-bold text-sky-800">Pro tip</p>
-              <p className="mt-0.5 text-xs leading-relaxed text-sky-600">
-                Bookmark posts with the{" "}
-                <span className="font-bold">
-                  <Bookmark className="inline size-3" />
-                </span>{" "}
-                icon — they&apos;ll persist across refreshes in your browser.
-              </p>
+          {/* Shuffle CTA */}
+          <div className="overflow-hidden rounded-2xl bg-linear-to-br from-violet-600 to-indigo-600 p-5 shadow-md shadow-violet-200">
+            <div className="mb-3 grid size-10 place-items-center rounded-xl border border-white/10 bg-white/10">
+              <Zap className="size-5 text-white" />
             </div>
+            <h2 className="text-sm font-bold text-white">Get fresh posts</h2>
+            <p className="mt-1.5 text-xs leading-relaxed text-white/70">
+              Pull a brand-new batch of hot threads from Reddit right now.
+            </p>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              disabled={loading || refreshing}
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-violet-600 shadow transition hover:bg-violet-50 active:scale-95 disabled:opacity-60"
+            >
+              <RefreshCcw className={`size-3.5 ${refreshing ? "animate-spin" : ""}`} />
+              {refreshing ? "Loading…" : "Refresh Feed"}
+            </button>
           </div>
         </aside>
-      </section>
+      </div>
     </div>
   );
 }
