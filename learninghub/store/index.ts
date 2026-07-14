@@ -29,6 +29,8 @@ interface UserState {
   toggleSavedCourse: (id: string) => void;
   completedLessons: string[];
   markLessonComplete: (id: string) => void;
+  savedRedditPostIds: string[];
+  toggleSavedRedditPost: (id: string) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -47,6 +49,13 @@ export const useUserStore = create<UserState>()(
           completedLessons: s.completedLessons.includes(id)
             ? s.completedLessons
             : [...s.completedLessons, id],
+        })),
+      savedRedditPostIds: [],
+      toggleSavedRedditPost: (id) =>
+        set((s) => ({
+          savedRedditPostIds: s.savedRedditPostIds.includes(id)
+            ? s.savedRedditPostIds.filter((x) => x !== id)
+            : [...s.savedRedditPostIds, id],
         })),
     }),
     { name: "learninghub:user" },
