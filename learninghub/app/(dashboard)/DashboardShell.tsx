@@ -19,7 +19,10 @@ import {
   Sparkles,
   User,
   Users,
+  Menu,
+  X,
 } from "lucide-react";
+import { useState } from "react";
 
 /* ─── Nav links ────────────────────────────────────────────────────────── */
 
@@ -52,6 +55,7 @@ const accountLinks = [
 function NavGroup({
   title,
   links,
+  onItemClick,
 }: {
   title: string;
   links: Array<{
@@ -60,6 +64,7 @@ function NavGroup({
     icon: React.ElementType;
     badge?: string;
   }>;
+  onItemClick?: () => void;
 }) {
   const pathname = usePathname();
 
@@ -77,6 +82,7 @@ function NavGroup({
             <Link
               key={link.href}
               href={link.href}
+              onClick={onItemClick}
               className={`flex h-9 items-center gap-3 rounded-lg px-3 text-sm transition-all duration-150 ${
                 active
                   ? "bg-violet-600 font-semibold text-white"
@@ -105,21 +111,33 @@ function NavGroup({
 /* ─── Shell ─────────────────────────────────────────────────────────────── */
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950">
       {/* ── Header ─────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
-        <div className="flex h-16 items-center gap-4 px-5 lg:px-6">
+        <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="grid size-9 shrink-0 place-items-center rounded-lg text-slate-600 transition hover:bg-slate-100 lg:hidden"
+            aria-label="Open menu"
+          >
+            <Menu className="size-5" />
+          </button>
+
           {/* Logo */}
-          <Link href="/dashboard" className="flex w-60 shrink-0 items-center gap-3">
+          <Link href="/dashboard" className="flex shrink-0 items-center gap-3 lg:w-60">
             <div className="grid size-9 place-items-center rounded-xl bg-violet-600 shadow-md shadow-violet-300/40">
               <Boxes className="size-5 text-white" />
             </div>
-            <div>
+            <div className="hidden sm:block">
               <p className="text-[15px] leading-none font-black tracking-tight text-slate-900">
                 LearningHub
               </p>
-              <p className="mt-0.5 text-[11px] text-slate-400">Powered by Kaishi Innovations</p>
+              <p className="mt-0.5 text-[11px] text-slate-400">Powered by Kaishi</p>
             </div>
           </Link>
 
@@ -172,7 +190,33 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
       {/* ── Body ────────────────────────────────────────────────────── */}
       <div className="flex">
-        {/* Sidebar */}
+        {/* ── Mobile Sidebar Overlay ────────────────────────────────── */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-50 flex lg:hidden">
+            <div
+              className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <aside className="relative flex w-64 flex-col bg-white h-full shadow-2xl animate-in slide-in-from-left-full duration-200">
+              <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 px-4">
+                <span className="font-black tracking-tight text-slate-900">Menu</span>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="grid size-8 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100"
+                >
+                  <X className="size-5" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto px-3 py-5 space-y-5">
+                <NavGroup title="Learn" links={learnLinks} onItemClick={() => setIsMobileMenuOpen(false)} />
+                <NavGroup title="Explore" links={exploreLinks} onItemClick={() => setIsMobileMenuOpen(false)} />
+                <NavGroup title="Account" links={accountLinks} onItemClick={() => setIsMobileMenuOpen(false)} />
+              </div>
+            </aside>
+          </div>
+        )}
+
+        {/* Desktop Sidebar */}
         <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-60 shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
           <div className="space-y-5">
             <NavGroup title="Learn" links={learnLinks} />
