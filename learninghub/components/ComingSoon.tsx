@@ -95,12 +95,12 @@ export default function ComingSoon() {
           {/* Action */}
           <div className="mt-12 flex justify-center" style={{ transform: "translateZ(30px)" }}>
             <Link
-              href="/dashboard"
+              href="/news"
               className="group/btn relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-8 py-3.5 font-bold text-slate-950 transition-transform hover:scale-105 active:scale-95"
             >
               <div className="absolute inset-0 bg-linear-to-r from-violet-200 to-fuchsia-200 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
               <ArrowLeft className="relative z-10 size-4 transition-transform group-hover/btn:-translate-x-1" />
-              <span className="relative z-10">Back to Dashboard</span>
+              <span className="relative z-10">Back to News Page</span>
             </Link>
           </div>
         </div>
