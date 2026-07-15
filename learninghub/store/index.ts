@@ -31,6 +31,10 @@ interface UserState {
   markLessonComplete: (id: string) => void;
   savedRedditPostIds: string[];
   toggleSavedRedditPost: (id: string) => void;
+  savedDailyDevPostIds: string[];
+  toggleSavedDailyDevPost: (id: string) => void;
+  pinnedPostIds: string[];
+  togglePinnedPost: (id: string) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -56,6 +60,20 @@ export const useUserStore = create<UserState>()(
           savedRedditPostIds: s.savedRedditPostIds.includes(id)
             ? s.savedRedditPostIds.filter((x) => x !== id)
             : [...s.savedRedditPostIds, id],
+        })),
+      savedDailyDevPostIds: [],
+      toggleSavedDailyDevPost: (id) =>
+        set((s) => ({
+          savedDailyDevPostIds: s.savedDailyDevPostIds.includes(id)
+            ? s.savedDailyDevPostIds.filter((x) => x !== id)
+            : [...s.savedDailyDevPostIds, id],
+        })),
+      pinnedPostIds: [],
+      togglePinnedPost: (id) =>
+        set((s) => ({
+          pinnedPostIds: s.pinnedPostIds.includes(id)
+            ? s.pinnedPostIds.filter((x) => x !== id)
+            : [...s.pinnedPostIds, id],
         })),
     }),
     { name: "learninghub:user" },
