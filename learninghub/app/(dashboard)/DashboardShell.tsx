@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Bell,
   BookOpen,
   Bookmark,
-  Boxes,
   ChevronDown,
   CircleHelp,
   GraduationCap,
   LayoutDashboard,
+  LayoutGrid,
   Newspaper,
   PenLine,
   Route,
@@ -24,7 +25,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-/* ─── Nav links ────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Nav links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const learnLinks = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -38,7 +39,7 @@ const learnLinks = [
 const exploreLinks = [
   { title: "All Courses", href: "/all-courses", icon: BookOpen },
   { title: "Explore by Role", href: "/roles", icon: Users },
-  { title: "Explore by Platform", href: "/platforms", icon: Boxes },
+  { title: "Explore by Platform", href: "/platforms", icon: LayoutGrid },
   { title: "New & Trending", href: "/trending", icon: Sparkles },
   { title: "Community", href: "/community", icon: Users },
   { title: "News", href: "/news", icon: Newspaper },
@@ -50,7 +51,7 @@ const accountLinks = [
   { title: "Help & Support", href: "/help-support", icon: CircleHelp },
 ];
 
-/* ─── NavGroup ─────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ NavGroup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function NavGroup({
   title,
@@ -108,14 +109,14 @@ function NavGroup({
   );
 }
 
-/* ─── Shell ─────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Shell â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950">
-      {/* ── Header ─────────────────────────────────────────────────── */}
+      {/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
         <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
           {/* Mobile Menu Button */}
@@ -129,16 +130,16 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </button>
 
           {/* Logo */}
-          <Link href="/dashboard" className="flex shrink-0 items-center gap-3 lg:w-60">
-            <div className="grid size-9 place-items-center rounded-xl bg-violet-600 shadow-md shadow-violet-300/40">
-              <Boxes className="size-5 text-white" />
-            </div>
-            <div className="hidden sm:block">
-              <p className="text-[15px] leading-none font-black tracking-tight text-slate-900">
-                LearningHub
-              </p>
-              <p className="mt-0.5 text-[11px] text-slate-400">Powered by Kaishi Innovations</p>
-            </div>
+          <Link href="/dashboard" className="flex shrink-0 items-center lg:w-60">
+            <Image
+              src="/kaishi-logo.png"
+              alt="LearningHub by Kaishi Innovations"
+              width={120}
+              height={46}
+              className="object-contain"
+              style={{ height: "auto" }}
+              priority
+            />
           </Link>
 
           {/* Search */}
@@ -150,7 +151,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 placeholder="Search courses, skills or topics..."
               />
               <kbd className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 shadow-sm">
-                ⌘K
+                âŒ˜K
               </kbd>
             </label>
           </div>
@@ -188,9 +189,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      {/* ── Body ────────────────────────────────────────────────────── */}
+      {/* â”€â”€ Body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="flex">
-        {/* ── Mobile Sidebar Overlay ────────────────────────────────── */}
+        {/* â”€â”€ Mobile Sidebar Overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         {isMobileMenuOpen && (
           <div className="fixed inset-0 z-50 flex lg:hidden">
             <div
@@ -247,7 +248,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         {/* Main */}
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-340">
-            {/* "Registered users only" badge — kept as original requested */}
+            {/* "Registered users only" badge â€” kept as original requested */}
             <div className="mb-5 flex items-center justify-end">
               <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600">
                 <svg
@@ -272,3 +273,4 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+

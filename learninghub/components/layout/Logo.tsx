@@ -1,14 +1,43 @@
-export default function Logo() {
-  return (
-    <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 font-bold text-white">
-        LH
-      </div>
+import Image from "next/image";
+import Link from "next/link";
 
-      <div>
-        <h1 className="text-lg font-bold">LearningHub</h1>
-        <p className="text-muted-foreground text-xs">Powered by Kaishi Innovations</p>
-      </div>
+interface LogoProps {
+  href?: string;
+  width?: number;
+  height?: number;
+  showTagline?: boolean;
+}
+
+export default function Logo({
+  href = "/dashboard",
+  width = 130,
+  height = 50,
+  showTagline = false,
+}: LogoProps) {
+  const inner = (
+    <div className="flex items-center gap-2.5">
+      <Image
+        src="/kaishi-logo.png"
+        alt="LearningHub by Kaishi Innovations"
+        width={width}
+        height={height}
+        className="object-contain"
+        style={{ height: "auto" }}
+        priority
+      />
+      {showTagline && (
+        <p className="text-muted-foreground text-xs hidden sm:block">
+          Powered by Kaishi Innovations
+        </p>
+      )}
     </div>
+  );
+
+  return href ? (
+    <Link href={href} className="shrink-0">
+      {inner}
+    </Link>
+  ) : (
+    <div className="shrink-0">{inner}</div>
   );
 }

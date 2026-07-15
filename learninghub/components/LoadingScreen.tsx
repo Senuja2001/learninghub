@@ -1,0 +1,83 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+export function LoadingScreen() {
+  const [show, setShow] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    // Start fade-out after 2.5s, then unmount at 3s
+    const fadeTimer = setTimeout(() => setFadeOut(true), 2500);
+    const hideTimer = setTimeout(() => setShow(false), 3000);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div
+      className={`fixed inset-0 z-9999 flex flex-col items-center justify-center bg-white transition-opacity duration-500 ${
+        fadeOut ? "opacity-0" : "opacity-100"
+      }`}
+    >
+      {/* Logo */}
+      <div className="mb-8 flex flex-col items-center animate-in fade-in-0 zoom-in-95 duration-500">
+        <Image
+          src="/kaishi-logo.png"
+          alt="Kaishi Innovations – LearningHub"
+          width={260}
+          height={120}
+          priority
+          style={{ height: "auto" }}
+          className="object-contain"
+        />
+      </div>
+
+      {/* Spinner */}
+      <div className="relative h-14 w-14">
+        {/* Outer ring */}
+        <svg
+          className="absolute inset-0 animate-spin"
+          viewBox="0 0 56 56"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="28"
+            cy="28"
+            r="24"
+            stroke="#e2e8f0"
+            strokeWidth="4"
+          />
+          <path
+            d="M28 4a24 24 0 0 1 24 24"
+            stroke="url(#spinGrad)"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          <defs>
+            <linearGradient id="spinGrad" x1="28" y1="4" x2="52" y2="28" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#1a2a5e" />
+              <stop offset="1" stopColor="#2cb67d" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Center dot */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="h-3 w-3 rounded-full bg-linear-to-br from-[#1a2a5e] to-[#2cb67d] animate-pulse" />
+        </div>
+      </div>
+
+      {/* Label */}
+      <p className="mt-5 text-sm font-semibold tracking-wide text-slate-400 animate-pulse">
+        Loading LearningHub…
+      </p>
+    </div>
+  );
+}
