@@ -137,7 +137,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <p className="text-[15px] leading-none font-black tracking-tight text-slate-900">
                 LearningHub
               </p>
-              <p className="mt-0.5 text-[11px] text-slate-400">Powered by Kaishi</p>
+              <p className="mt-0.5 text-[11px] text-slate-400">Powered by Kaishi Innovations</p>
             </div>
           </Link>
 
