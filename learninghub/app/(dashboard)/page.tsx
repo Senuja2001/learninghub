@@ -1,7 +1,9 @@
-export default function HomePage() {
-  return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1 className="text-4xl font-bold">LearningHub</h1>
-    </main>
-  );
+import { redirect } from "next/navigation";
+
+/**
+ * Root dashboard group page — redirects to the main dashboard.
+ * The real dashboard UI lives at /dashboard.
+ */
+export default function DashboardGroupRootPage() {
+  redirect("/dashboard");
 }
