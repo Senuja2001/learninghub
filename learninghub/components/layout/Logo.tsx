@@ -17,7 +17,7 @@ export default function Logo({
   const inner = (
     <div className="flex items-center gap-2.5">
       <Image
-        src="/kaishi-logo.png"
+        src="public/kaishi-logo.png"
         alt="LearningHub by Kaishi Innovations"
         width={width}
         height={height}
