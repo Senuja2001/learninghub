@@ -26,7 +26,7 @@ export function HomeNavbar() {
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
-        scrolled ? "border-b border-slate-100 bg-white/95 shadow-sm backdrop-blur-md" : "bg-white border-b border-slate-100"
+        scrolled ? "bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-[0_4px_24px_rgba(0,0,0,0.06)]" : "bg-white border-b border-slate-100"
       }`}
     >
       <div className="mx-auto flex h-15 max-w-7xl items-center px-4 sm:px-6 lg:px-8">

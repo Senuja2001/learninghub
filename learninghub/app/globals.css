@@ -128,3 +128,156 @@
     @apply font-sans;
   }
 }
+
+/* ── Homepage visual animation keyframes ─────────────────────────────────── */
+
+/* 1. Hero background blobs slow drift */
+@keyframes mesh-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -20px) scale(1.05); }
+  66%  { transform: translate(-20px, 30px) scale(0.97); }
+  100% { transform: translate(10px, -10px) scale(1.02); }
+}
+
+/* 2. Headline gradient shimmer sweep */
+@keyframes shimmer-sweep {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* 3. Floating card bob up/down */
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* 4. Infinite marquee scroll */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* 5. Scroll-triggered section fade up */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 6. Stat number glow pulse after count-up */
+@keyframes count-glow {
+  0%, 100% { text-shadow: 0 0 0px transparent; }
+  50%       { text-shadow: 0 0 14px rgba(99, 102, 241, 0.5); }
+}
+
+/* 7. Button pulsing ring */
+@keyframes ring-pulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* Utility classes for animations */
+.animate-mesh-drift {
+  animation: mesh-drift 10s ease-in-out infinite alternate;
+}
+.animate-mesh-drift-slow {
+  animation: mesh-drift 14s ease-in-out infinite alternate-reverse;
+}
+.animate-mesh-drift-mid {
+  animation: mesh-drift 12s ease-in-out 2s infinite alternate;
+}
+.animate-shimmer {
+  background-size: 300% auto;
+  animation: shimmer-sweep 4s linear infinite;
+}
+.animate-float-bob {
+  animation: float-bob 4s ease-in-out infinite;
+}
+.animate-float-bob-reverse {
+  animation: float-bob 5s ease-in-out infinite reverse;
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out forwards;
+}
+.animate-count-glow {
+  animation: count-glow 2s ease-in-out 3;
+}
+.animate-ring-pulse {
+  animation: ring-pulse 1.8s ease-out infinite;
+}
+
+/* Fade-up initial hidden state (before IntersectionObserver fires) */
+.fade-up-hidden {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* ── Tier 2 & 3 Next-Level Visuals ───────────────────────────────────────── */
+
+/* Dot Grid Background */
+.hero-dot-grid {
+  background-image: radial-gradient(circle, #cbd5e1 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+}
+
+/* Cursor Glow Trail */
+.cursor-glow {
+  background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+  transition: left 0.08s ease-out, top 0.08s ease-out;
+}
+
+/* Ripple Click Effect */
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+.animate-ripple {
+  animation: ripple 0.6s linear forwards;
+}
+
+/* Animated Gradient Border (Using pure CSS conic-gradient) */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes border-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+.animated-gradient-border {
+  position: relative;
+}
+.animated-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  z-index: -1;
+  background: conic-gradient(from var(--angle), #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+  animation: border-spin 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.group:hover > .animated-gradient-border::before {
+  opacity: 1;
+}
