@@ -1,19 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export function LoadingScreen() {
   const [show, setShow] = useState(true);
-  const [fadeOut, setFadeOut] = useState(false);
+  const [exit, setExit] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Start fade-out after 2.5s, then unmount at 3s
-    const fadeTimer = setTimeout(() => setFadeOut(true), 2500);
-    const hideTimer = setTimeout(() => setShow(false), 3000);
+    // Smoothly animate progress 0 to 100% over ~2.5s (100 steps * 25ms = 2500ms)
+    let p = 0;
+    const pInterval = setInterval(() => {
+      p += 1;
+      if (p >= 100) {
+        setProgress(100);
+        clearInterval(pInterval);
+      } else {
+        setProgress(p);
+      }
+    }, 25);
+
+    // Trigger curtain slide-up exit at 2.5s
+    const exitTimer = setTimeout(() => setExit(true), 2500);
+    
+    // Completely unmount the component after the exit transition completes
+    const hideTimer = setTimeout(() => setShow(false), 3200);
 
     return () => {
-      clearTimeout(fadeTimer);
+      clearInterval(pInterval);
+      clearTimeout(exitTimer);
       clearTimeout(hideTimer);
     };
   }, []);
@@ -22,71 +37,44 @@ export function LoadingScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-9999 flex flex-col items-center justify-center bg-white transition-opacity duration-500 ${
-        fadeOut ? "pointer-events-none opacity-0" : "opacity-100"
+      className={`fixed inset-0 z-9999 flex flex-col items-center justify-center overflow-hidden bg-white/80 backdrop-blur-xl transition-transform duration-700 ease-in-out ${
+        exit ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      {/* Logo */}
-      <div className="mb-8 flex flex-col items-center animate-in fade-in-0 zoom-in-95 duration-500">
-        <img
-          src="/kaishi-logo.png"
-          alt="Kaishi Innovations"
-          className="h-12 md:h-80 w-auto max-w-[50vw] object-contain"
-        />
-
-        <p className="mt-3 text-xs font-medium tracking-wide text-slate-400">
-          Powered by Kaishi Innovations
-        </p>
+      {/* Background Mesh (Behind the Glass) */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden z-[-1]">
+        <div className="animate-mesh-drift absolute top-0 right-0 h-125 w-125 rounded-full bg-linear-to-bl from-blue-100/60 via-violet-100/50 to-transparent blur-3xl" />
+        <div className="animate-mesh-drift-slow absolute top-20 right-40 h-75 w-75 rounded-full bg-indigo-100/40 blur-3xl" />
+        <div className="animate-mesh-drift-mid absolute bottom-0 left-10 h-72 w-72 rounded-full bg-linear-to-tr from-violet-100/40 via-blue-100/30 to-transparent blur-3xl" />
       </div>
 
-      {/* Spinner */}
-      <div className="relative h-14 w-14">
-        <svg
-          className="absolute inset-0 animate-spin"
-          viewBox="0 0 56 56"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="28"
-            cy="28"
-            r="24"
-            stroke="#e2e8f0"
-            strokeWidth="4"
+      <div className="relative z-10 flex w-full max-w-sm flex-col items-center px-6 text-center animate-in fade-in-0 zoom-in-95 duration-500">
+        {/* Logo */}
+        <div className="mb-10 flex flex-col items-center">
+          <img
+            src="/kaishi-logo.png"
+            alt="Kaishi Innovations"
+            className="h-12 md:h-20 w-auto object-contain"
           />
+          <p className="mt-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+            Powered by Kaishi Innovations
+          </p>
+        </div>
 
-          <path
-            d="M28 4a24 24 0 0 1 24 24"
-            stroke="url(#spinGrad)"
-            strokeWidth="4"
-            strokeLinecap="round"
-          />
-
-          <defs>
-            <linearGradient
-              id="spinGrad"
-              x1="28"
-              y1="4"
-              x2="52"
-              y2="28"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#481a5f" />
-              <stop offset="1" stopColor="#c91fbe" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        {/* Center dot */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3 w-3 animate-pulse rounded-full bg-linear-to-br from-[#481a5f] to-[#c91fbe]" />
+        {/* Thematic Progress Bar */}
+        <div className="w-full">
+          <div className="mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-slate-500">
+            <span>Loading Platform...</span>
+            <span className="text-blue-600 transition-all">{progress}%</span>
+          </div>
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200/50 shadow-inner">
+            <div
+              className="h-full rounded-full bg-linear-to-r from-blue-500 to-violet-600 transition-all duration-75 ease-linear shadow-lg shadow-blue-500/50"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
       </div>
-
-      {/* Loading Label */}
-      <p className="mt-5 animate-pulse text-sm font-semibold tracking-wide text-slate-400">
-        Loading LearningHub…
-      </p>
     </div>
   );
 }
