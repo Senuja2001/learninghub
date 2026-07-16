@@ -105,7 +105,7 @@ export default function CommunityPage() {
               </div>
 
               <div className="mt-5 flex gap-3">
-                <div className="grid size-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-200 to-sky-200 text-sm font-black text-slate-700">
+                <div className="grid size-11 shrink-0 place-items-center rounded-full bg-linear-to-br from-violet-200 to-sky-200 text-sm font-black text-slate-700">
                   JD
                 </div>
                 <div className="min-w-0 flex-1">
@@ -241,7 +241,7 @@ export default function CommunityPage() {
             </div>
           </div>
 
-          <div className="rounded-lg bg-gradient-to-br from-violet-600 to-indigo-700 p-5 text-white shadow-lg shadow-violet-100">
+          <div className="rounded-lg bg-linear-to-br from-violet-600 to-indigo-700 p-5 text-white shadow-lg shadow-violet-100">
             <PenLine className="size-8" />
             <h2 className="mt-4 text-xl font-black">Share your knowledge</h2>
             <p className="mt-2 text-sm leading-6 text-violet-100">
