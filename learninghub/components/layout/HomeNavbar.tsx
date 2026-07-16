@@ -36,7 +36,7 @@ export function HomeNavbar() {
           <img
             src="/kaishi-logo.png"
             alt="Kaishi Innovations Logo"
-            className="h-10 md:h-12 w-auto object-contain"
+            className="h-10 md:h-25 w-auto object-contain"
           />
         </Link>
 

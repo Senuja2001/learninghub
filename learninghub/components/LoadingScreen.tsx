@@ -31,7 +31,7 @@ export function LoadingScreen() {
         <img
           src="/kaishi-logo.png"
           alt="Kaishi Innovations"
-          className="h-24 md:h-40 w-auto max-w-[90vw] object-contain"
+          className="h-24 md:h-80 w-auto max-w-[90vw] object-contain"
         />
 
         <p className="mt-3 text-xs font-medium tracking-wide text-slate-400">
@@ -71,15 +71,15 @@ export function LoadingScreen() {
               y2="28"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#1a2a5e" />
-              <stop offset="1" stopColor="#2cb67d" />
+              <stop stopColor="#481a5f" />
+              <stop offset="1" stopColor="#c91fbe" />
             </linearGradient>
           </defs>
         </svg>
 
         {/* Center dot */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3 w-3 animate-pulse rounded-full bg-linear-to-br from-[#1a2a5e] to-[#2cb67d]" />
+          <div className="h-3 w-3 animate-pulse rounded-full bg-linear-to-br from-[#481a5f] to-[#c91fbe]" />
         </div>
       </div>
 

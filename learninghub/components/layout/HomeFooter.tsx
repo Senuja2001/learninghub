@@ -10,7 +10,7 @@ export function HomeFooter() {
             <img
               src="/kaishi-logo.png"
               alt="Kaishi Innovations"
-              className="mb-4 h-16 md:h-20 w-auto object-contain"
+              className="mb-1 h-16 md:h-25 w-auto object-contain"
             />
             <p className="text-sm leading-relaxed text-slate-500">
               LearningHub is built by Kaishi Innovations to help IT professionals learn faster, grow smarter, and reach their career goals.
