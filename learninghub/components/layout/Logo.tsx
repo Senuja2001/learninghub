@@ -16,15 +16,6 @@ export default function Logo({
 }: LogoProps) {
   const inner = (
     <div className="flex items-center gap-2.5">
-      <Image
-        src="public/kaishi-logo.png"
-        alt="LearningHub by Kaishi Innovations"
-        width={width}
-        height={height}
-        className="object-contain"
-        style={{ height: "auto" }}
-        priority
-      />
       {showTagline && (
         <p className="text-muted-foreground text-xs hidden sm:block">
           Powered by Kaishi Innovations

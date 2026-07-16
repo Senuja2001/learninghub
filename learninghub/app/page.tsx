@@ -860,15 +860,7 @@ function HomeNavbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <Image
-            src="/kaishi-logo.png"
-            alt="LearningHub by Kaishi Innovations"
-            width={130}
-            height={50}
-            className="object-contain"
-            style={{ height: "auto" }}
-            priority
-          />
+          
         </Link>
 
         {/* Desktop Nav */}
@@ -954,14 +946,7 @@ function HomeFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Image
-              src="/kaishi-logo.png"
-              alt="Kaishi Innovations"
-              width={130}
-              height={50}
-              className="mb-3 object-contain"
-              style={{ height: "auto" }}
-            />
+            
             <p className="text-sm leading-relaxed text-slate-500">
               LearningHub is built by Kaishi Innovations to help IT professionals learn faster, grow smarter, and reach their career goals.
             </p>

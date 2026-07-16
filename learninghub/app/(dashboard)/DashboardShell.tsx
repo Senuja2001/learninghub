@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -131,15 +131,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
           {/* Logo */}
           <Link href="/dashboard" className="flex shrink-0 items-center lg:w-60">
-            <Image
-              src="/kaishi-logo.png"
-              alt="LearningHub by Kaishi Innovations"
-              width={120}
-              height={46}
-              className="object-contain"
-              style={{ height: "auto" }}
-              priority
-            />
+            
           </Link>
 
           {/* Search */}

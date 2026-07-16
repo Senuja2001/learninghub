@@ -27,15 +27,7 @@ export function LoadingScreen() {
     >
       {/* Logo */}
       <div className="mb-8 flex flex-col items-center animate-in fade-in-0 zoom-in-95 duration-500">
-        <Image
-          src="/kaishi-logo.png"
-          alt="Kaishi Innovations – LearningHub"
-          width={260}
-          height={120}
-          priority
-          style={{ height: "auto" }}
-          className="object-contain"
-        />
+        
       </div>
 
       {/* Spinner */}
