@@ -6,16 +6,16 @@ export function HomeFooter() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center lg:items-start lg:text-left">
             <img
               src="/kaishi-logo.png"
               alt="Kaishi Innovations"
-              className="mb-3 h-10 w-auto object-contain"
+              className="mb-4 h-16 md:h-20 w-auto object-contain"
             />
             <p className="text-sm leading-relaxed text-slate-500">
               LearningHub is built by Kaishi Innovations to help IT professionals learn faster, grow smarter, and reach their career goals.
             </p>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex justify-center lg:justify-start gap-3">
               {["Twitter", "LinkedIn", "GitHub"].map((s) => (
                 <a
                   key={s}

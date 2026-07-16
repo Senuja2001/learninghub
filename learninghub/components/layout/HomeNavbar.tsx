@@ -35,8 +35,8 @@ export function HomeNavbar() {
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <img
             src="/kaishi-logo.png"
-            alt="LearningHub by Kaishi Innovations"
-            className="h-10 w-auto object-contain"
+            alt="Kaishi Innovations Logo"
+            className="h-10 md:h-12 w-auto object-contain"
           />
         </Link>
 

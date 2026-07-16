@@ -17,11 +17,11 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
         </button>
 
         {/* Logo */}
-        <Link href="/dashboard" className="flex shrink-0 items-center lg:w-60">
+        <Link href="/dashboard" className="flex flex-1 lg:flex-none justify-center lg:justify-start shrink-0 items-center lg:w-60">
           <img
             src="/kaishi-logo.png"
             alt="LearningHub by Kaishi Innovations"
-            className="h-9 w-auto object-contain"
+            className="h-10 md:h-12 w-auto object-contain"
           />
         </Link>
 

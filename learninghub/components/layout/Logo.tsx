@@ -17,10 +17,10 @@ export default function Logo({
   const inner = (
     <div className="flex items-center gap-2.5">
       <img
-        src="/kaishi-logo.png"
-        alt="Kaishi Innovations Logo"
-        className="h-10 w-auto object-contain"
-      />
+  src="/kaishi-logo.png"
+  alt="Kaishi Innovations Logo"
+  className="h-12 w-auto object-contain sm:h-14 md:h-25"
+/>
 
       {showTagline && (
         <p className="hidden text-xs text-muted-foreground sm:block">
