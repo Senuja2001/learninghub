@@ -11,6 +11,7 @@ export function LoadingScreen() {
     // Start fade-out after 2.5s, then unmount at 3s
     const fadeTimer = setTimeout(() => setFadeOut(true), 2500);
     const hideTimer = setTimeout(() => setShow(false), 3000);
+
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(hideTimer);
@@ -22,17 +23,27 @@ export function LoadingScreen() {
   return (
     <div
       className={`fixed inset-0 z-9999 flex flex-col items-center justify-center bg-white transition-opacity duration-500 ${
-        fadeOut ? "opacity-0" : "opacity-100"
+        fadeOut ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
       {/* Logo */}
       <div className="mb-8 flex flex-col items-center animate-in fade-in-0 zoom-in-95 duration-500">
-        
+        <Image
+          src="/kaishi-logo.png"
+          alt="Kaishi Innovations"
+          width={180}
+          height={70}
+          priority
+          className="h-auto w-auto max-w-45 object-contain"
+        />
+
+        <p className="mt-3 text-xs font-medium tracking-wide text-slate-400">
+          Powered by Kaishi Innovations
+        </p>
       </div>
 
       {/* Spinner */}
       <div className="relative h-14 w-14">
-        {/* Outer ring */}
         <svg
           className="absolute inset-0 animate-spin"
           viewBox="0 0 56 56"
@@ -46,14 +57,23 @@ export function LoadingScreen() {
             stroke="#e2e8f0"
             strokeWidth="4"
           />
+
           <path
             d="M28 4a24 24 0 0 1 24 24"
             stroke="url(#spinGrad)"
             strokeWidth="4"
             strokeLinecap="round"
           />
+
           <defs>
-            <linearGradient id="spinGrad" x1="28" y1="4" x2="52" y2="28" gradientUnits="userSpaceOnUse">
+            <linearGradient
+              id="spinGrad"
+              x1="28"
+              y1="4"
+              x2="52"
+              y2="28"
+              gradientUnits="userSpaceOnUse"
+            >
               <stop stopColor="#1a2a5e" />
               <stop offset="1" stopColor="#2cb67d" />
             </linearGradient>
@@ -62,12 +82,12 @@ export function LoadingScreen() {
 
         {/* Center dot */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-3 w-3 rounded-full bg-linear-to-br from-[#1a2a5e] to-[#2cb67d] animate-pulse" />
+          <div className="h-3 w-3 animate-pulse rounded-full bg-linear-to-br from-[#1a2a5e] to-[#2cb67d]" />
         </div>
       </div>
 
-      {/* Label */}
-      <p className="mt-5 text-sm font-semibold tracking-wide text-slate-400 animate-pulse">
+      {/* Loading Label */}
+      <p className="mt-5 animate-pulse text-sm font-semibold tracking-wide text-slate-400">
         Loading LearningHub…
       </p>
     </div>

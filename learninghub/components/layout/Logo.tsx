@@ -16,8 +16,17 @@ export default function Logo({
 }: LogoProps) {
   const inner = (
     <div className="flex items-center gap-2.5">
+      <Image
+        src="/kaishi-logo.png"
+        alt="Kaishi Innovations Logo"
+        width={1000}
+        height={500}
+        priority
+        className="h-auto object-contain"
+      />
+
       {showTagline && (
-        <p className="text-muted-foreground text-xs hidden sm:block">
+        <p className="hidden text-xs text-muted-foreground sm:block">
           Powered by Kaishi Innovations
         </p>
       )}
@@ -25,7 +34,11 @@ export default function Logo({
   );
 
   return href ? (
-    <Link href={href} className="shrink-0">
+    <Link
+      href={href}
+      className="shrink-0"
+      aria-label="Go to LearningHub dashboard"
+    >
       {inner}
     </Link>
   ) : (
