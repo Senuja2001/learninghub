@@ -33,14 +33,10 @@ export function HomeNavbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <Image
+          <img
             src="/kaishi-logo.png"
             alt="LearningHub by Kaishi Innovations"
-            width={130}
-            height={50}
-            className="object-contain"
-            style={{ height: "auto" }}
-            priority
+            className="h-10 w-auto object-contain"
           />
         </Link>
 

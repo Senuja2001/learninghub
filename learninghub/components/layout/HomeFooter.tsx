@@ -7,13 +7,10 @@ export function HomeFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Image
+            <img
               src="/kaishi-logo.png"
               alt="Kaishi Innovations"
-              width={130}
-              height={50}
-              className="mb-3 object-contain"
-              style={{ height: "auto" }}
+              className="mb-3 h-10 w-auto object-contain"
             />
             <p className="text-sm leading-relaxed text-slate-500">
               LearningHub is built by Kaishi Innovations to help IT professionals learn faster, grow smarter, and reach their career goals.

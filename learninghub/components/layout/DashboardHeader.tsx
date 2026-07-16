@@ -18,14 +18,10 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
 
         {/* Logo */}
         <Link href="/dashboard" className="flex shrink-0 items-center lg:w-60">
-          <Image
+          <img
             src="/kaishi-logo.png"
             alt="LearningHub by Kaishi Innovations"
-            width={120}
-            height={46}
-            className="object-contain"
-            style={{ height: "auto" }}
-            priority
+            className="h-9 w-auto object-contain"
           />
         </Link>
 

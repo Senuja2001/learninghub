@@ -28,13 +28,10 @@ export function LoadingScreen() {
     >
       {/* Logo */}
       <div className="mb-8 flex flex-col items-center animate-in fade-in-0 zoom-in-95 duration-500">
-        <Image
+        <img
           src="/kaishi-logo.png"
           alt="Kaishi Innovations"
-          width={180}
-          height={70}
-          priority
-          className="h-auto w-auto max-w-45 object-contain"
+          className="h-16 w-auto object-contain"
         />
 
         <p className="mt-3 text-xs font-medium tracking-wide text-slate-400">

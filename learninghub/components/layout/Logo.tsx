@@ -16,13 +16,10 @@ export default function Logo({
 }: LogoProps) {
   const inner = (
     <div className="flex items-center gap-2.5">
-      <Image
+      <img
         src="/kaishi-logo.png"
         alt="Kaishi Innovations Logo"
-        width={1000}
-        height={500}
-        priority
-        className="h-auto object-contain"
+        className="h-10 w-auto object-contain"
       />
 
       {showTagline && (
