@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export function HomeFooter() {
   return (
-    <footer className="border-t border-slate-100 bg-white py-12">
+    <footer className="border-t border-slate-100 bg-white py-6">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center lg:items-start lg:text-left">
             <img
@@ -58,7 +58,7 @@ export function HomeFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-100 pt-6 sm:flex-row">
+        <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-slate-100 pt-4 sm:flex-row">
           <p className="text-xs text-slate-400">
             © {new Date().getFullYear()} Kaishi Innovations. All rights reserved.
           </p>
