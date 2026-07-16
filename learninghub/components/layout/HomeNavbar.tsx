@@ -29,10 +29,10 @@ export function HomeNavbar() {
         scrolled ? "border-b border-slate-100 bg-white/95 shadow-sm backdrop-blur-md" : "bg-white border-b border-slate-100"
       }`}
     >
-      <div className="mx-auto flex h-[60px] max-w-7xl items-center px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-15 max-w-7xl items-center px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-violet-600">
             <BookOpen className="h-4 w-4 text-white" />
           </div>
           <span className="text-[17px] font-bold text-slate-900">LearnHub</span>
@@ -61,7 +61,7 @@ export function HomeNavbar() {
           </Link>
           <Link
             href="/register"
-            className="inline-flex h-9 items-center rounded-lg bg-gradient-to-r from-blue-500 to-violet-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+            className="inline-flex h-9 items-center rounded-lg bg-linear-to-r from-blue-500 to-violet-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
           >
             Get Started
           </Link>
@@ -102,7 +102,7 @@ export function HomeNavbar() {
             </Link>
             <Link
               href="/register"
-              className="flex-1 rounded-xl bg-gradient-to-r from-blue-500 to-violet-600 py-2 text-center text-sm font-bold text-white"
+              className="flex-1 rounded-xl bg-linear-to-r from-blue-500 to-violet-600 py-2 text-center text-sm font-bold text-white"
             >
               Get Started
             </Link>
