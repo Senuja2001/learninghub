@@ -423,12 +423,6 @@ function HeroSection() {
         <div className="grid items-start lg:grid-cols-[1fr_auto] gap-8">
           {/* Left copy */}
           <div className="pt-8 lg:pt-12 pb-10 max-w-130">
-            {/* Badge */}
-            <div className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1.5">
-              <Zap className="h-3 w-3 text-blue-500 fill-blue-400" />
-              <span className="text-[11px] font-semibold text-blue-600">#1 Learning Platform for IT Professionals</span>
-            </div>
-
             <h1 className="font-black leading-tight tracking-tight">
               <span className="block text-[40px] sm:text-[48px] text-slate-900">
                 Empower Your Career.
@@ -441,7 +435,7 @@ function HeroSection() {
               </span>
             </h1>
 
-            <p className="mt-5 text-[14px] leading-relaxed text-slate-500 max-w-100">
+            <p className="mt-5 text-[16px] leading-relaxed text-slate-500 max-w-100">
               LearnHub is your all-in-one learning management system for the IT industry. Access curated courses, track progress, earn certificates, and accelerate your career growth.
             </p>
 
