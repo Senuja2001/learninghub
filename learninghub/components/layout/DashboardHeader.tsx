@@ -21,7 +21,7 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
           <img
             src="/kaishi-logo.png"
             alt="LearningHub by Kaishi Innovations"
-            className="h-10 md:h-12 w-auto object-contain"
+            className="mb-1 h-16 md:h-25 w-auto object-contain"
           />
         </Link>
 
