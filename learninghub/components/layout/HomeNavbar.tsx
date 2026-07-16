@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronRight, Menu, X } from "lucide-react";
-import Image from "next/image";
+import { BookOpen, Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -27,26 +26,25 @@ export function HomeNavbar() {
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
-        scrolled ? "border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md" : "bg-white"
+        scrolled ? "border-b border-slate-100 bg-white/95 shadow-sm backdrop-blur-md" : "bg-white border-b border-slate-100"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[60px] max-w-7xl items-center px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <img
-            src="/kaishi-logo.png"
-            alt="Kaishi Innovations Logo"
-            className="h-10 md:h-25 w-auto object-contain"
-          />
+        <Link href="/" className="flex shrink-0 items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600">
+            <BookOpen className="h-4 w-4 text-white" />
+          </div>
+          <span className="text-[17px] font-bold text-slate-900">LearnHub</span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="ml-8 hidden items-center gap-1 lg:flex">
+        <nav className="ml-10 hidden items-center gap-0.5 lg:flex">
           {navLinks.map((l) => (
             <Link
               key={l.label}
               href={l.href}
-              className="rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              className="rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:text-slate-900"
             >
               {l.label}
             </Link>
@@ -54,18 +52,18 @@ export function HomeNavbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="ml-auto flex items-center gap-2.5">
+        <div className="ml-auto flex items-center gap-2">
           <Link
             href="/login"
-            className="hidden h-9 items-center rounded-lg px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 sm:flex"
+            className="hidden h-9 items-center rounded-lg px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50 sm:flex border border-slate-200"
           >
             Login
           </Link>
           <Link
             href="/register"
-            className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-violet-600 px-4 text-sm font-bold text-white shadow-sm shadow-violet-300/40 transition hover:bg-violet-700"
+            className="inline-flex h-9 items-center rounded-lg bg-gradient-to-r from-blue-500 to-violet-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
           >
-            Get Started <ChevronRight className="h-3.5 w-3.5" />
+            Get Started
           </Link>
 
           {/* Mobile menu button */}
@@ -104,7 +102,7 @@ export function HomeNavbar() {
             </Link>
             <Link
               href="/register"
-              className="flex-1 rounded-xl bg-violet-600 py-2 text-center text-sm font-bold text-white"
+              className="flex-1 rounded-xl bg-gradient-to-r from-blue-500 to-violet-600 py-2 text-center text-sm font-bold text-white"
             >
               Get Started
             </Link>

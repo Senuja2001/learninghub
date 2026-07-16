@@ -32,8 +32,6 @@ import { HomeFooter } from "@/components/layout/HomeFooter";
 
 /* ─── Data ───────────────────────────────────────────────────────────────── */
 
-
-
 const stats = [
   { value: "5000+", label: "Active Learners", icon: Users },
   { value: "300+", label: "Curated Courses", icon: BookOpen },
@@ -45,23 +43,23 @@ const features = [
   {
     icon: BookOpen,
     title: "Curated Courses",
-    desc: "Access industry-leading courses from YouTube, Udemy, Coursera and more — hand-picked so you spend time learning, not searching.",
+    desc: "Access industry-leading courses from YouTube, Udemy, Coursera and more.",
     color: "from-violet-500 to-indigo-600",
-    bg: "bg-violet-50",
-    iconColor: "text-violet-600",
+    bg: "bg-blue-50",
+    iconColor: "text-blue-600",
   },
   {
     icon: Route,
     title: "Learning Paths",
-    desc: "Follow structured career roadmaps designed by industry experts — from junior dev to cloud architect, we map your journey.",
+    desc: "Follow structured learning paths designed by industry experts.",
     color: "from-teal-500 to-emerald-600",
-    bg: "bg-teal-50",
-    iconColor: "text-teal-600",
+    bg: "bg-blue-50",
+    iconColor: "text-blue-600",
   },
   {
     icon: BarChart2,
     title: "Track Progress",
-    desc: "Real-time analytics on your learning hours, course completions and skill growth — stay motivated and never lose momentum.",
+    desc: "Monitor your learning progress with detailed analytics.",
     color: "from-blue-500 to-cyan-600",
     bg: "bg-blue-50",
     iconColor: "text-blue-600",
@@ -69,26 +67,26 @@ const features = [
   {
     icon: GraduationCap,
     title: "Certificates",
-    desc: "Earn verifiable certificates for each completed path and course — download as PDF, share on LinkedIn, or show employers.",
+    desc: "Earn certificates and showcase your new skills.",
     color: "from-amber-500 to-orange-500",
-    bg: "bg-amber-50",
-    iconColor: "text-amber-600",
+    bg: "bg-violet-50",
+    iconColor: "text-violet-600",
   },
   {
     icon: Brain,
     title: "Skill Assessment",
-    desc: "Take built-in quizzes and challenges after each module to test what you've learned and identify where to go deeper.",
+    desc: "Test your knowledge and track your skill improvement.",
     color: "from-rose-500 to-pink-600",
-    bg: "bg-rose-50",
-    iconColor: "text-rose-600",
+    bg: "bg-violet-50",
+    iconColor: "text-violet-600",
   },
   {
     icon: Users,
     title: "Team Learning",
-    desc: "Learn side-by-side with your team, share bookmarks, compare streaks, and celebrate wins together on the community board.",
+    desc: "Learn with your team and achieve more together.",
     color: "from-purple-500 to-violet-600",
-    bg: "bg-purple-50",
-    iconColor: "text-purple-600",
+    bg: "bg-blue-50",
+    iconColor: "text-blue-600",
   },
 ];
 
@@ -269,205 +267,242 @@ function useCountUp(target: string, duration = 1500) {
   return count;
 }
 
-function StatCard({ value, label, icon: Icon }: { value: string; label: string; icon: React.ElementType }) {
-  const count = useCountUp(value);
-  return (
-    <div className="flex flex-col items-center gap-1 text-center">
-      <div className="mb-1 flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100">
-        <Icon className="h-5 w-5 text-violet-600" />
-      </div>
-      <span className="text-2xl font-black text-slate-900">{count}</span>
-      <span className="text-sm text-slate-500">{label}</span>
-    </div>
-  );
-}
-
 /* ─── Hero section ─────────────────────────────────────────────────────── */
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-white pb-16 pt-10 lg:pb-24 lg:pt-16">
-      {/* Background gradient blobs */}
+    <section className="relative overflow-hidden bg-white pt-8 pb-0">
+      {/* Very subtle background glow top-right */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 h-150 w-150 rounded-full bg-violet-100/60 blur-3xl" />
-        <div className="absolute -bottom-20 -left-20 h-100 w-100 rounded-full bg-teal-100/40 blur-3xl" />
+        <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-gradient-to-bl from-blue-100/50 via-violet-100/40 to-transparent blur-3xl" />
+        <div className="absolute top-20 right-40 h-[300px] w-[300px] rounded-full bg-indigo-100/30 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div className="grid items-start lg:grid-cols-[1fr_auto] gap-8">
           {/* Left copy */}
-          <div className="text-center lg:text-left">
+          <div className="pt-8 lg:pt-12 pb-10 max-w-[520px]">
             {/* Badge */}
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-4 py-1.5">
-              <Zap className="h-3.5 w-3.5 text-violet-600" />
-              <span className="text-xs font-semibold text-violet-700">#1 Learning Platform for IT Professionals</span>
+            <div className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/80 px-3.5 py-1.5">
+              <Zap className="h-3 w-3 text-blue-500 fill-blue-400" />
+              <span className="text-[11px] font-semibold text-blue-600">#1 Learning Platform for IT Professionals</span>
             </div>
 
-            <h1 className="text-4xl font-black leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              Empower Your Career.{" "}
-              <span className="bg-linear-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent">
+            <h1 className="font-black leading-tight tracking-tight">
+              <span className="block text-[40px] sm:text-[44px] text-slate-900">
+                Empower Your Career.
+              </span>
+              <span className="block text-[40px] sm:text-[44px] bg-gradient-to-r from-blue-500 to-violet-600 bg-clip-text text-transparent">
                 Learn. Grow. Succeed.
               </span>
             </h1>
 
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-slate-600 lg:text-lg">
-              LearningHub is your all-in-one learning management system for the IT industry. Access curated courses, track progress, earn certificates, and accelerate your career growth.
+            <p className="mt-5 text-[14px] leading-relaxed text-slate-500 max-w-[400px]">
+              LearnHub is your all-in-one learning management system for the IT industry. Access curated courses, track progress, earn certificates, and accelerate your career growth.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
+            <div className="mt-7 flex items-center gap-3">
               <Link
                 href="/register"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-violet-600 px-6 text-sm font-bold text-white shadow-lg shadow-violet-300/40 transition-all hover:-translate-y-0.5 hover:bg-violet-700 hover:shadow-violet-300/60"
+                className="inline-flex h-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-violet-600 px-5 text-sm font-semibold text-white shadow-md shadow-blue-300/40 transition hover:opacity-90"
               >
                 Get Started
-                <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/all-courses"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 text-sm font-semibold text-slate-700 transition-all hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md"
+                className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
-                <PlayCircle className="h-4 w-4 text-violet-500" />
+                <span className="text-slate-400">&#9654;</span>
                 Explore Courses
               </Link>
             </div>
 
-            {/* Trust signals */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-5 lg:justify-start">
-              {[
-                "No credit card required",
-                "Cancel anytime",
-                "7-day free trial",
-              ].map((t) => (
-                <div key={t} className="flex items-center gap-1.5 text-xs text-slate-500">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-teal-500" />
-                  {t}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right – hero card */}
-          <div className="relative mx-auto w-full max-w-md">
-            {/* Main card */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/60">
-              <div className="mb-4 flex items-center justify-between">
-                <p className="text-sm font-bold text-slate-900">Your Progress</p>
-                <span className="rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-bold text-violet-700">78%</span>
-              </div>
-
-              {/* Progress bar */}
-              <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                <div
-                  className="h-full rounded-full bg-linear-to-r from-violet-500 to-indigo-500"
-                  style={{ width: "78%" }}
-                />
-              </div>
-
-              <div className="mt-5 space-y-3">
-                {[
-                  { name: "React – The Complete Guide", prog: 78, color: "bg-violet-500" },
-                  { name: "AWS Solutions Architect", prog: 41, color: "bg-amber-500" },
-                  { name: "JavaScript Algorithms", prog: 60, color: "bg-teal-500" },
-                ].map((c) => (
-                  <div key={c.name} className="flex items-center gap-3">
-                    <div className="flex-1 min-w-0">
-                      <p className="truncate text-xs font-medium text-slate-700">{c.name}</p>
-                      <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100">
-                        <div className={`h-full rounded-full ${c.color}`} style={{ width: `${c.prog}%` }} />
-                      </div>
+            {/* Stats row */}
+            <div className="mt-12 flex items-start gap-10">
+              {stats.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <div key={s.label} className="flex flex-col items-start">
+                    <div className="mb-2">
+                      <Icon className="h-5 w-5 text-blue-400" strokeWidth={1.5} />
                     </div>
-                    <span className="text-xs font-bold text-slate-500">{c.prog}%</span>
+                    <span className="text-[22px] font-black text-slate-900 leading-none">{s.value}</span>
+                    <span className="mt-1 text-[11px] text-slate-500 leading-tight">{s.label}</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Certificates earned badge */}
-              <div className="mt-5 flex items-center justify-between rounded-xl bg-linear-to-r from-violet-50 to-indigo-50 p-3.5">
-                <div className="flex items-center gap-2.5">
-                  <div className="grid h-9 w-9 place-items-center rounded-lg bg-violet-600 text-white">
-                    <GraduationCap className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500">Certificates Earned</p>
-                    <p className="text-xl font-black text-slate-900">12</p>
-                  </div>
-                </div>
-                <TrendingUp className="h-5 w-5 text-teal-500" />
-              </div>
-            </div>
-
-            {/* Floating badge */}
-            <div className="absolute -top-4 -right-4 flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-lg shadow-slate-200/80">
-              <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-              <span className="text-xs font-bold text-slate-700">5,000+ learners online</span>
+                );
+              })}
             </div>
           </div>
-        </div>
 
-        {/* Stats row */}
-        <div className="mt-16 grid grid-cols-2 gap-6 rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:grid-cols-4">
-          {stats.map((s) => (
-            <StatCard key={s.label} value={s.value} label={s.label} icon={s.icon} />
-          ))}
+          {/* Right – hero image with floating cards */}
+          <div className="relative flex-shrink-0 w-[420px] hidden lg:block">
+            {/* Decorative geometric lines behind the man */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Large circle outline */}
+              <svg className="absolute top-8 right-4 w-[340px] h-[340px] opacity-20" viewBox="0 0 340 340" fill="none">
+                <circle cx="170" cy="170" r="168" stroke="#6366f1" strokeWidth="1" strokeDasharray="6 6" />
+              </svg>
+              {/* Smaller circle */}
+              <svg className="absolute top-20 right-12 w-[200px] h-[200px] opacity-15" viewBox="0 0 200 200" fill="none">
+                <circle cx="100" cy="100" r="98" stroke="#818cf8" strokeWidth="1" />
+              </svg>
+              {/* Corner brackets */}
+              <svg className="absolute top-6 right-6 w-12 h-12 opacity-30" viewBox="0 0 48 48" fill="none">
+                <path d="M0 12 L0 0 L12 0" stroke="#6366f1" strokeWidth="2" />
+                <path d="M36 0 L48 0 L48 12" stroke="#6366f1" strokeWidth="2" />
+              </svg>
+              {/* Blue glow blob behind man */}
+              <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gradient-to-br from-blue-200/50 to-violet-200/40 blur-2xl" />
+            </div>
+
+            {/* Person Image */}
+            <div className="relative flex justify-center pt-4">
+              <img
+                src="/hero_person.png"
+                alt="IT Professional learning on LearnHub"
+                className="relative z-10 h-[420px] w-auto object-contain object-top"
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                }}
+              />
+
+              {/* Floating Progress Card – top right */}
+              <div className="absolute top-6 -right-6 z-20 w-44 rounded-2xl border border-slate-100 bg-white p-4 shadow-xl shadow-slate-200/80">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="text-xs font-bold text-slate-800">Your Progress</p>
+                  <span className="text-xs font-bold text-slate-700">76%</span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-600"
+                    style={{ width: "76%" }}
+                  />
+                </div>
+              </div>
+
+              {/* Floating Certificates Card – bottom right */}
+              <div className="absolute bottom-16 -right-6 z-20 flex items-center gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-xl shadow-slate-200/80">
+                <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 text-white shrink-0">
+                  <GraduationCap className="h-4 w-4" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-slate-500">Certificates Earned</p>
+                  <p className="text-xl font-black text-slate-900">12</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ─── Trusted By ────────────────────────────────────────────────────────── */
+const trustedLogos = [
+  {
+    name: "Microsoft",
+    render: () => (
+      <div className="flex items-center gap-2 text-slate-300 hover:text-slate-400 transition-colors cursor-default">
+        {/* Windows 4-square icon */}
+        <svg viewBox="0 0 21 21" className="h-5 w-5" fill="currentColor">
+          <path d="M0 0h10v10H0zM11 0h10v10H11zM0 11h10v10H0zM11 11h10v10H11z" />
+        </svg>
+        <span className="text-[17px] font-semibold tracking-tight">Microsoft</span>
+      </div>
+    ),
+  },
+  {
+    name: "Google",
+    render: () => (
+      <span className="text-[22px] font-medium tracking-tight text-slate-300 hover:text-slate-400 transition-colors cursor-default">
+        Google
+      </span>
+    ),
+  },
+  {
+    name: "AWS",
+    render: () => (
+      <div className="flex flex-col items-center cursor-default">
+        <span className="text-[18px] font-black tracking-tight text-slate-300 hover:text-slate-400 transition-colors leading-none">aws</span>
+        <div className="mt-0.5 h-0.5 w-10 bg-slate-300 rounded" />
+      </div>
+    ),
+  },
+  {
+    name: "IBM",
+    render: () => (
+      <span className="text-[22px] font-black tracking-[0.1em] text-slate-300 hover:text-slate-400 transition-colors cursor-default">
+        IBM
+      </span>
+    ),
+  },
+  {
+    name: "Oracle",
+    render: () => (
+      <span className="text-[18px] font-bold tracking-tight text-slate-300 hover:text-slate-400 transition-colors cursor-default uppercase">
+        ORACLE
+      </span>
+    ),
+  },
+  {
+    name: "Infosys",
+    render: () => (
+      <span className="text-[18px] font-semibold tracking-tight text-slate-300 hover:text-slate-400 transition-colors cursor-default">
+        Infosys
+      </span>
+    ),
+  },
+];
+
 function TrustedSection() {
   return (
-    <section className="border-y border-slate-100 bg-slate-50 py-10">
+    <section className="bg-white py-10 border-t border-slate-100">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-8 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
-          Trusted by learners from leading companies
+        <p className="mb-8 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+          TRUSTED BY LEADING IT COMPANIES
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-10">
-          {trustedBy.map((c) => (
-            <span
-              key={c.name}
-              className="text-xl font-black tracking-tight text-slate-300 transition-colors hover:text-slate-500"
-            >
-              {c.logo}
-            </span>
+        <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-16">
+          {trustedLogos.map((c) => (
+            <div key={c.name}>
+              {c.render()}
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ─── Features ──────────────────────────────────────────────────────────── */
 function FeaturesSection() {
   return (
-    <section id="features" className="py-20 lg:py-28">
+    <section id="features" className="py-16 lg:py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-14 max-w-2xl text-center">
-          <p className="mb-3 text-sm font-bold uppercase tracking-widest text-violet-600">Platform Features</p>
-          <h2 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <h2 className="text-[28px] font-black tracking-tight text-slate-900 sm:text-3xl">
             Everything You Need to Grow
           </h2>
-          <p className="mt-4 text-base text-slate-500">
-            Powerful features designed to make learning simple, effective, and engaging — all in one place.
+          <p className="mt-3 text-sm text-slate-500">
+            Powerful features designed to make learning simple, effective, and engaging.
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => {
             const Icon = f.icon;
             return (
               <div
                 key={f.title}
-                className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/60"
+                className="group rounded-xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl ${f.bg}`}>
-                  <Icon className={`h-5 w-5 ${f.iconColor}`} />
+                <div className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg ${f.bg}`}>
+                  <Icon className={`h-5 w-5 ${f.iconColor}`} strokeWidth={1.5} />
                 </div>
-                <h3 className="mb-2 text-base font-bold text-slate-900">{f.title}</h3>
-                <p className="text-sm leading-relaxed text-slate-500">{f.desc}</p>
-                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-violet-600 opacity-0 transition-opacity group-hover:opacity-100">
-                  Learn more <ChevronRight className="h-3.5 w-3.5" />
-                </div>
+                <h3 className="mb-1.5 text-sm font-bold text-slate-900">{f.title}</h3>
+                <p className="text-[13px] leading-relaxed text-slate-500">{f.desc}</p>
               </div>
             );
           })}
@@ -590,7 +625,7 @@ function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <p className="mb-5 text-sm leading-relaxed text-slate-600">"{t.text}"</p>
+              <p className="mb-5 text-sm leading-relaxed text-slate-600">&quot;{t.text}&quot;</p>
 
               {/* Author */}
               <div className="flex items-center gap-3">
@@ -684,55 +719,61 @@ function PricingSection() {
 /* ─── CTA Banner ────────────────────────────────────────────────────────── */
 function CTASection() {
   return (
-    <section className="py-20 lg:py-24">
+    <section className="py-12 lg:py-16 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-violet-600 via-indigo-600 to-purple-700 px-8 py-14 text-center shadow-2xl shadow-violet-300/30 lg:px-16">
-          {/* Background dots */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-600 to-violet-600 px-8 py-12 shadow-2xl shadow-violet-300/30 lg:px-14">
+          {/* Background blobs */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -top-16 right-40 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -bottom-16 -left-8 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl" />
           </div>
 
-          <div className="relative">
-            <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">
-              Ready to Start Your Learning Journey?
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-violet-100">
-              Join thousands of IT professionals who are already learning and growing with LearningHub. Your next career move starts here.
-            </p>
+          <div className="relative flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+            {/* Left copy */}
+            <div className="max-w-md">
+              <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
+                Ready to Start Your Learning Journey?
+              </h2>
+              <p className="mt-3 text-[13px] text-blue-100 leading-relaxed">
+                Join thousands of IT professionals who are already learning and growing.
+              </p>
 
-            <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Link
-                href="/register"
-                className="inline-flex h-11 items-center gap-2 rounded-xl bg-white px-7 text-sm font-bold text-violet-700 shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl"
-              >
-                Get Started
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="#contact"
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
-              >
-                <MessageSquare className="h-4 w-4" />
-                Contact Sales
-              </Link>
+              <div className="mt-7 flex items-center gap-3">
+                <Link
+                  href="/register"
+                  className="inline-flex h-10 items-center gap-2 rounded-lg bg-white px-5 text-sm font-bold text-blue-700 shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="#contact"
+                  className="inline-flex h-10 items-center gap-2 rounded-lg border border-white/30 bg-white/15 px-5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/25"
+                >
+                  Contact Sales
+                </Link>
+              </div>
             </div>
-          </div>
 
-          {/* Floating mini preview */}
-          <div className="relative mx-auto mt-10 hidden max-w-xs rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm sm:block">
-            <p className="mb-2 text-xs font-bold text-white/80">Continue Learning</p>
-            <div className="flex items-center gap-3 rounded-lg bg-white/10 p-2.5">
-              <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-violet-500/80">
-                <BookOpen className="h-4 w-4 text-white" />
+            {/* Right – Continue Learning card */}
+            <div className="w-full max-w-[260px] shrink-0 rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
+              <div className="mb-4 flex items-center justify-between">
+                <p className="text-sm font-bold text-white">Continue Learning</p>
+                <span className="text-white/50 text-lg leading-none">···</span>
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="truncate text-xs font-semibold text-white">React – The Complete Guide</p>
-                <div className="mt-1 h-1 w-full rounded-full bg-white/20">
-                  <div className="h-full w-[78%] rounded-full bg-white/70" />
+              <div className="flex items-center gap-3 rounded-xl bg-white/10 p-3">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-blue-600/60">
+                  <img src="/thumb_nextjs.png" alt="React course" className="h-full w-full object-cover" />
                 </div>
+                <div className="flex-1 min-w-0">
+                  <p className="truncate text-xs font-semibold text-white">React – The Complete Guide</p>
+                  <p className="mt-0.5 text-[10px] text-blue-200">In Progress</p>
+                  <div className="mt-2 h-1 w-full rounded-full bg-white/20">
+                    <div className="h-full w-[78%] rounded-full bg-white/70" />
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-white/80 shrink-0">78%</span>
               </div>
-              <span className="text-xs font-bold text-white/80">78%</span>
             </div>
           </div>
         </div>
@@ -740,6 +781,7 @@ function CTASection() {
     </section>
   );
 }
+
 
 /* ─── Contact ───────────────────────────────────────────────────────────── */
 function ContactSection() {

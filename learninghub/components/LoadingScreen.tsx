@@ -31,7 +31,7 @@ export function LoadingScreen() {
         <img
           src="/kaishi-logo.png"
           alt="Kaishi Innovations"
-          className="h-24 md:h-80 w-auto max-w-[90vw] object-contain"
+          className="h-12 md:h-80 w-auto max-w-[50vw] object-contain"
         />
 
         <p className="mt-3 text-xs font-medium tracking-wide text-slate-400">
