@@ -295,11 +295,11 @@ export default function AboutPage() {
               {/* Floating Mission / Vision Card */}
               <div
                 className="
-                  absolute -bottom-12 left-4 right-4
+                  absolute -bottom-4 left-4 right-4
                   rounded-2xl border border-slate-100
                   bg-white/95 shadow-[0_12px_36px_rgba(0,0,0,0.10)]
                   backdrop-blur-sm
-                  lg:-bottom-14 lg:left-6 lg:right-0
+                  lg:bottom-4 lg:left-6 lg:right-6
                 "
               >
                 <div className="grid sm:grid-cols-2">

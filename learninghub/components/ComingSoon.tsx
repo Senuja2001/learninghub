@@ -98,17 +98,17 @@ export default function ComingSoon({
         <motion.div
           animate={{ scale: [1, 1.12, 1], opacity: [0.18, 0.28, 0.18] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -left-40 top-1/4 h-[500px] w-[500px] rounded-full bg-violet-600 blur-[130px]"
+          className="absolute -left-40 top-1/4 h-125 w-125 rounded-full bg-violet-600 blur-[130px]"
         />
         <motion.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute -right-40 bottom-1/4 h-[500px] w-[500px] rounded-full bg-fuchsia-600 blur-[130px]"
+          className="absolute -right-40 bottom-1/4 h-125 w-125 rounded-full bg-fuchsia-600 blur-[130px]"
         />
         <motion.div
           animate={{ scale: [1, 1.08, 1], opacity: [0.08, 0.14, 0.08] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-800 blur-[150px]"
+          className="absolute left-1/2 top-1/2 h-175 w-175 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-800 blur-[150px]"
         />
       </div>
 
@@ -147,7 +147,7 @@ export default function ComingSoon({
         initial={{ opacity: 0, scale: 0.88, y: 28 }}
         animate={{ opacity: 1, scale: 1,    y: 0  }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="group perspective-[1200px] relative z-10 w-full max-w-2xl"
+        className="group perspective-distant relative z-10 w-full max-w-2xl"
       >
         {/* Cursor-tracked glow */}
         <motion.div
@@ -157,12 +157,12 @@ export default function ComingSoon({
 
         <div
           style={{ transform: "translateZ(40px)" }}
-          className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/[0.04] p-10 text-center shadow-2xl shadow-black/60 backdrop-blur-2xl sm:p-14"
+          className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/4 p-10 text-center shadow-2xl shadow-black/60 backdrop-blur-2xl sm:p-14"
         >
           {/* Top shimmer line */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-violet-400/60 to-transparent" />
           {/* Bottom shimmer line */}
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-fuchsia-400/30 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-fuchsia-400/30 to-transparent" />
 
           {/* ── Icon ──────────────────────────────────────────────────────── */}
           <motion.div
@@ -170,7 +170,7 @@ export default function ComingSoon({
             animate={{ scale: 1, rotate: 0   }}
             transition={{ type: "spring", delay: 0.25, bounce: 0.45 }}
             style={{ transform: "translateZ(60px)" }}
-            className="mx-auto mb-8 grid size-[88px] place-items-center rounded-3xl bg-gradient-to-br from-violet-500 to-fuchsia-600 shadow-xl shadow-violet-500/30 ring-1 ring-white/20"
+            className="mx-auto mb-8 grid size-22 place-items-center rounded-3xl bg-linear-to-br from-violet-500 to-fuchsia-600 shadow-xl shadow-violet-500/30 ring-1 ring-white/20"
           >
             <Rocket className="size-10 text-white drop-shadow" />
           </motion.div>
@@ -186,7 +186,7 @@ export default function ComingSoon({
 
             <h1
               data-stagger
-              className="bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-5xl font-black tracking-tight text-transparent opacity-0 sm:text-7xl"
+              className="bg-linear-to-b from-white via-white to-white/40 bg-clip-text text-5xl font-black tracking-tight text-transparent opacity-0 sm:text-7xl"
             >
               Coming Soon
             </h1>
@@ -230,7 +230,7 @@ export default function ComingSoon({
               <motion.div
                 animate={{ x: ["-100%", "100%"] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                className="h-full w-1/2 rounded-full bg-gradient-to-r from-transparent via-violet-500 to-fuchsia-500"
+                className="h-full w-1/2 rounded-full bg-linear-to-r from-transparent via-violet-500 to-fuchsia-500"
               />
             </div>
           </motion.div>
@@ -246,7 +246,7 @@ export default function ComingSoon({
               className="group/btn relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-white/15 bg-white/8 px-7 py-3 text-[13px] font-bold text-white backdrop-blur-sm transition-all duration-300 hover:border-violet-400/50 hover:bg-white/12 hover:shadow-lg hover:shadow-violet-500/20 active:scale-95"
             >
               {/* Hover fill */}
-              <span className="absolute inset-0 -z-10 bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
+              <span className="absolute inset-0 -z-10 bg-linear-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100" />
               <ArrowLeft className="size-4 transition-transform duration-200 group-hover/btn:-translate-x-1" />
               {backLabel}
             </Link>

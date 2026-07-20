@@ -61,7 +61,7 @@ export function AboutFooter() {
         </div>
 
         {/* Bottom copyright */}
-        <div className="mt-5 border-t border-white/6 pt-4 text-center text-[11.5px] text-slate-500">
+        <div className="mt-10 border-t border-white/6 pt-4 text-center text-[11.5px] text-slate-500">
           © {new Date().getFullYear()} Kaishi Innovations. All rights reserved.
         </div>
       </div>
