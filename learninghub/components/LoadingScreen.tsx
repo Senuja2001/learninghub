@@ -2,77 +2,131 @@
 
 import { useEffect, useState } from "react";
 
+const DURATION = 2400; // ms — how long progress bar takes to fill
+
 export function LoadingScreen() {
-  const [show, setShow] = useState(true);
-  const [exit, setExit] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [mounted, setMounted]   = useState(false); // controls entrance fade
+  const [barFull, setBarFull]   = useState(false); // triggers CSS transition
+  const [counter, setCounter]   = useState(0);     // displayed percentage
+  const [exiting, setExiting]   = useState(false); // controls exit fade
+  const [gone, setGone]         = useState(false);  // unmounts entirely
 
   useEffect(() => {
-    // Smoothly animate progress 0 to 100% over ~2.5s (100 steps * 25ms = 2500ms)
-    let p = 0;
-    const pInterval = setInterval(() => {
-      p += 1;
-      if (p >= 100) {
-        setProgress(100);
-        clearInterval(pInterval);
-      } else {
-        setProgress(p);
-      }
-    }, 25);
+    // Tiny delay so the initial paint is complete before the bar starts
+    const mountId = requestAnimationFrame(() => {
+      setMounted(true);
 
-    // Trigger curtain slide-up exit at 2.5s
-    const exitTimer = setTimeout(() => setExit(true), 2500);
-    
-    // Completely unmount the component after the exit transition completes
-    const hideTimer = setTimeout(() => setShow(false), 3200);
+      // Start the bar on the next frame so the CSS transition fires
+      requestAnimationFrame(() => setBarFull(true));
+    });
+
+    // ── Smooth counter via rAF ─────────────────────────────────────────────
+    let raf: number;
+    let startTime: number | null = null;
+
+    const tick = (ts: number) => {
+      if (!startTime) startTime = ts;
+      const elapsed = ts - startTime;
+      // Use the same ease-out cubic as the bar so they stay in sync
+      const t = Math.min(elapsed / DURATION, 1);
+      const eased = t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2; // ease-in-out cubic
+      setCounter(Math.round(eased * 100));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    // ── Exit sequence ──────────────────────────────────────────────────────
+    const exitTimer = setTimeout(() => setExiting(true), DURATION + 200);
+    const goneTimer = setTimeout(() => setGone(true),    DURATION + 900);
 
     return () => {
-      clearInterval(pInterval);
+      cancelAnimationFrame(mountId);
+      cancelAnimationFrame(raf);
       clearTimeout(exitTimer);
-      clearTimeout(hideTimer);
+      clearTimeout(goneTimer);
     };
   }, []);
 
-  if (!show) return null;
+  if (gone) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-9999 flex flex-col items-center justify-center overflow-hidden bg-white/80 backdrop-blur-xl transition-transform duration-700 ease-in-out ${
-        exit ? "-translate-y-full" : "translate-y-0"
-      }`}
+      style={{
+        transition: exiting
+          ? "opacity 600ms ease, transform 600ms cubic-bezier(0.4,0,0.2,1)"
+          : "opacity 350ms ease",
+        opacity:   exiting ? 0 : mounted ? 1 : 0,
+        transform: exiting ? "translateY(-24px)" : "translateY(0)",
+      }}
+      className="fixed inset-0 z-9999 flex flex-col items-center justify-center overflow-hidden bg-white"
+      aria-label="Loading LearningHub"
+      aria-live="polite"
     >
-      {/* Background Mesh (Behind the Glass) */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden z-[-1]">
-        <div className="animate-mesh-drift absolute top-0 right-0 h-125 w-125 rounded-full bg-linear-to-bl from-blue-100/60 via-violet-100/50 to-transparent blur-3xl" />
-        <div className="animate-mesh-drift-slow absolute top-20 right-40 h-75 w-75 rounded-full bg-indigo-100/40 blur-3xl" />
-        <div className="animate-mesh-drift-mid absolute bottom-0 left-10 h-72 w-72 rounded-full bg-linear-to-tr from-violet-100/40 via-blue-100/30 to-transparent blur-3xl" />
+      {/* ── Soft ambient blobs ── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="animate-mesh-drift absolute -top-20 right-0 h-125 w-125 rounded-full bg-linear-to-bl from-blue-100/70 via-violet-100/50 to-transparent blur-3xl" />
+        <div className="animate-mesh-drift-slow absolute top-24 right-36 h-72 w-72 rounded-full bg-indigo-100/40 blur-3xl" />
+        <div className="animate-mesh-drift-mid absolute -bottom-10 left-8 h-72 w-72 rounded-full bg-linear-to-tr from-violet-100/40 via-blue-100/30 to-transparent blur-3xl" />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-sm flex-col items-center px-6 text-center animate-in fade-in-0 zoom-in-95 duration-500">
+      {/* ── Content card ── */}
+      <div
+        style={{
+          transition: "opacity 400ms ease 80ms, transform 400ms cubic-bezier(0.34,1.56,0.64,1) 80ms",
+          opacity:   mounted ? 1 : 0,
+          transform: mounted ? "scale(1) translateY(0)" : "scale(0.96) translateY(12px)",
+        }}
+        className="relative z-10 flex w-full max-w-xs flex-col items-center px-6 text-center"
+      >
         {/* Logo */}
         <div className="mb-10 flex flex-col items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/kaishi-logo.png"
             alt="Kaishi Innovations"
-            className="h-12 md:h-20 w-auto object-contain"
+            className="h-14 w-auto object-contain md:h-20"
           />
-          <p className="mt-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+          <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
             Powered by Kaishi Innovations
           </p>
         </div>
 
-        {/* Thematic Progress Bar */}
-        <div className="w-full">
-          <div className="mb-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-slate-500">
-            <span>Loading Platform...</span>
-            <span className="text-blue-600 transition-all">{progress}%</span>
-          </div>
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200/50 shadow-inner">
-            <div
-              className="h-full rounded-full bg-linear-to-r from-blue-500 to-violet-600 transition-all duration-75 ease-linear shadow-lg shadow-blue-500/50"
-              style={{ width: `${progress}%` }}
+        {/* Label row */}
+        <div className="mb-2.5 flex w-full items-center justify-between text-[10.5px] font-semibold uppercase tracking-widest text-slate-400">
+          <span>Loading Platform…</span>
+          <span
+            className="tabular-nums text-violet-600"
+            aria-label={`${counter} percent loaded`}
+          >
+            {counter}%
+          </span>
+        </div>
+
+        {/* Progress track */}
+        <div className="h-1 w-full overflow-hidden rounded-full bg-slate-100">
+          {/* Bar — animated by a single CSS transition for perfect smoothness */}
+          <div
+            style={{
+              width: barFull ? "100%" : "0%",
+              transition: barFull
+                ? `width ${DURATION}ms cubic-bezier(0.45, 0, 0.15, 1)`
+                : "none",
+            }}
+            className="h-full rounded-full bg-linear-to-r from-blue-500 to-violet-600 shadow-[0_0_10px_2px_rgba(139,92,246,0.35)]"
+          />
+        </div>
+
+        {/* Subtle "dots" pulse below the bar */}
+        <div className="mt-6 flex items-center gap-1.5">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              style={{ animationDelay: `${i * 220}ms` }}
+              className="h-1.5 w-1.5 animate-bounce rounded-full bg-violet-300"
             />
-          </div>
+          ))}
         </div>
       </div>
     </div>

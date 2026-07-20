@@ -35,7 +35,7 @@ export function HomeNavbar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-violet-600">
             <BookOpen className="h-4 w-4 text-white" />
           </div>
-          <span className="text-[17px] font-bold text-slate-900">LearnHub</span>
+          <span className="text-[17px] font-bold text-slate-900">Learning Hub</span>
         </Link>
 
         {/* Desktop Nav */}
