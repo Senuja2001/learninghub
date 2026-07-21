@@ -1,13 +1,13 @@
 import React from "react";
 import type { Metadata } from "next";
 import { HomeNavbar } from "@/components/layout/HomeNavbar";
+import { HomeFooter } from "@/components/layout/HomeFooter";
 import { AboutFooter } from "@/components/layout/AboutFooter";
 import {
   Headphones,
   MessageCircle,
   Lightbulb,
   Briefcase,
-  Send,
   Mail,
   Phone,
   MapPin,
@@ -211,7 +211,7 @@ export default function ContactPage() {
 
       </main>
 
-      <AboutFooter />
+<HomeFooter />
     </div>
   );
 }
