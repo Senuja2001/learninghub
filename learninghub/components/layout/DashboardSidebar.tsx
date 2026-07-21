@@ -41,7 +41,7 @@ const exploreLinks = [
 const accountLinks = [
   { title: "My Profile", href: "/profile", icon: User },
   { title: "Settings", href: "/settings", icon: Settings },
-  { title: "Help & Support", href: "/help-support", icon: CircleHelp },
+  { title: "Help & Support", href: "/contact", icon: CircleHelp },
 ];
 
 function NavGroup({

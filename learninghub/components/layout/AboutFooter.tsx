@@ -47,6 +47,9 @@ export function AboutFooter() {
 
           {/* Right: Legal links */}
           <div className="flex items-center gap-5 text-[12px] text-slate-400">
+            <Link href="/contact" className="hover:text-white transition-colors">
+              Contact Us
+            </Link>
             <Link href="#" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>

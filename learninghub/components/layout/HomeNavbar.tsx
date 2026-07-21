@@ -10,7 +10,7 @@ const navLinks = [
   { label: "Features", href: "/#features" },
   { label: "Courses", href: "/all-courses" },
   { label: "Pricing", href: "/#pricing" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function HomeNavbar() {

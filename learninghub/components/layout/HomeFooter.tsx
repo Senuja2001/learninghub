@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function HomeFooter() {
   return (
@@ -32,25 +33,40 @@ export function HomeFooter() {
           {[
             {
               title: "Platform",
-              links: ["All Courses", "Learning Paths", "Certificates", "Community"],
+              links: [
+                { name: "All Courses", href: "/all-courses" },
+                { name: "Learning Paths", href: "#" },
+                { name: "Certificates", href: "#" },
+                { name: "Community", href: "#" },
+              ],
             },
             {
               title: "Company",
-              links: ["About", "Blog", "Careers", "Press"],
+              links: [
+                { name: "About", href: "/about" },
+                { name: "Blog", href: "#" },
+                { name: "Careers", href: "#" },
+                { name: "Press", href: "#" },
+              ],
             },
             {
               title: "Support",
-              links: ["Help Centre", "Privacy Policy", "Terms of Service", "Contact"],
+              links: [
+                { name: "Help Centre", href: "#" },
+                { name: "Privacy Policy", href: "#" },
+                { name: "Terms of Service", href: "#" },
+                { name: "Contact", href: "/contact" },
+              ],
             },
           ].map((col) => (
             <div key={col.title}>
               <p className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">{col.title}</p>
               <ul className="space-y-2.5">
                 {col.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="text-sm text-slate-600 transition hover:text-violet-600">
-                      {l}
-                    </a>
+                  <li key={l.name}>
+                    <Link href={l.href} className="text-sm text-slate-600 transition hover:text-violet-600">
+                      {l.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
