@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { HomeNavbar } from "@/components/layout/HomeNavbar";
-import { AboutFooter } from "@/components/layout/AboutFooter";
+import { HomeFooter } from "@/components/layout/HomeFooter";
 import {
   Target,
   Eye,
@@ -518,7 +518,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      <AboutFooter />
+      <HomeFooter />
     </div>
   );
 }
