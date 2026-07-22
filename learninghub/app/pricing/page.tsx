@@ -203,7 +203,7 @@ export default function PricingPage() {
                     alt="Modern collaborative office space"
                     width={1200}
                     height={700}
-                    className="h-[280px] w-full object-cover sm:h-[340px] lg:h-[380px]"
+                    className="h-70 w-full object-cover sm:h-85 lg:h-95"
                     priority
                   />
                   {/* Subtle violet tint overlay */}
