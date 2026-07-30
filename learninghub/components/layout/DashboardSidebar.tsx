@@ -6,12 +6,12 @@ import {
   Bell,
   BookOpen,
   Bookmark,
+  CalendarDays,
   CircleHelp,
   GraduationCap,
   LayoutDashboard,
   LayoutGrid,
-  Newspaper,
-  PenLine,
+  MessageSquare,
   Route,
   Settings,
   Sparkles,
@@ -26,7 +26,7 @@ const learnLinks = [
   { title: "Learning Paths", href: "/learning-paths", icon: Route },
   { title: "Certificates", href: "/certificates", icon: GraduationCap },
   { title: "Bookmarks", href: "/bookmarks", icon: Bookmark },
-  { title: "Notifications", href: "/notifications", icon: Bell, badge: "5" },
+  { title: "Notifications", href: "/notifications", icon: Bell, badge: "6" },
 ];
 
 const exploreLinks = [
@@ -34,14 +34,18 @@ const exploreLinks = [
   { title: "Explore by Role", href: "/roles", icon: Users },
   { title: "Explore by Platform", href: "/platforms", icon: LayoutGrid },
   { title: "New & Trending", href: "/trending", icon: Sparkles },
+];
+
+const communityLinks = [
   { title: "Community", href: "/community", icon: Users },
-  { title: "News", href: "/news", icon: Newspaper },
+  { title: "Discussions", href: "/discussions", icon: MessageSquare },
+  { title: "Events & Webinars", href: "/events", icon: CalendarDays },
 ];
 
 const accountLinks = [
   { title: "My Profile", href: "/profile", icon: User },
   { title: "Settings", href: "/settings", icon: Settings },
-  { title: "Help & Support", href: "/contact", icon: CircleHelp },
+  { title: "Help & Support", href: "/help-support", icon: CircleHelp },
 ];
 
 function NavGroup({
@@ -129,36 +133,38 @@ export function DashboardSidebar({
             <div className="flex-1 overflow-y-auto px-3 py-5 space-y-5">
               <NavGroup title="Learn" links={learnLinks} onItemClick={onCloseMobileMenu} />
               <NavGroup title="Explore" links={exploreLinks} onItemClick={onCloseMobileMenu} />
+              <NavGroup title="Community" links={communityLinks} onItemClick={onCloseMobileMenu} />
               <NavGroup title="Account" links={accountLinks} onItemClick={onCloseMobileMenu} />
             </div>
           </aside>
         </div>
       )}
 
-      {/* Desktop Sidebar */}
+      {/* ── Desktop Sidebar ────────────────────────────────────────────── */}
       <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-60 shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
         <div className="space-y-5">
           <NavGroup title="Learn" links={learnLinks} />
           <NavGroup title="Explore" links={exploreLinks} />
+          <NavGroup title="Community" links={communityLinks} />
           <NavGroup title="Account" links={accountLinks} />
 
-          {/* CTA */}
-          <div className="rounded-xl bg-violet-50 p-4">
-            <p className="text-sm leading-tight font-black text-slate-900">
-              Learn together.
-              <br />
-              Grow together.
-            </p>
-            <p className="mt-2 text-xs leading-relaxed text-slate-500">
-              Join discussions, share knowledge, and build your network.
+          {/* ── Need help fast? CTA ─────────────────────────── */}
+          <div className="relative rounded-xl bg-violet-50 p-4 pb-0">
+            <p className="text-sm font-black leading-tight text-slate-900">Need help fast?</p>
+            <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
+              Our support team is here to assist you.
             </p>
             <Link
-              href="/community"
-              className="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-violet-600 text-xs font-bold text-white shadow-md shadow-violet-300/40 transition hover:bg-violet-700"
+              href="/help-support"
+              className="mt-3 inline-flex h-9 w-full items-center justify-center rounded-lg bg-violet-600 text-xs font-bold text-white shadow-md shadow-violet-300/40 transition hover:bg-violet-700"
             >
-              <PenLine className="size-3.5" />
-              Create Post
+              Contact Support →
             </Link>
+            {/* Decorative bot illustration */}
+            <div className="pointer-events-none mt-4 flex justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/help-bot.png" alt="" className="h-24 w-24 object-contain translate-y-2" />
+            </div>
           </div>
         </div>
       </aside>
