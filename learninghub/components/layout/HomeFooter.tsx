@@ -32,29 +32,29 @@ export function HomeFooter() {
           {/* Links */}
           {[
             {
-              title: "Platform",
+              title: "Learning",
               links: [
                 { name: "All Courses", href: "/all-courses" },
-                { name: "Learning Paths", href: "#" },
-                { name: "Certificates", href: "#" },
-                { name: "Community", href: "#" },
+                { name: "Learning Paths", href: "/learning-paths" },
+                { name: "Certificates", href: "/certificates" },
+                { name: "Community", href: "/community" },
               ],
             },
             {
               title: "Company",
               links: [
                 { name: "About", href: "/about" },
-                { name: "Blog", href: "#" },
-                { name: "Careers", href: "#" },
-                { name: "Press", href: "#" },
+                { name: "Blog", href: "/blog" },
+                { name: "Careers", href: "/careers" },
+                { name: "Press", href: "/press" },
               ],
             },
             {
               title: "Support",
               links: [
-                { name: "Help Centre", href: "#" },
-                { name: "Privacy Policy", href: "#" },
-                { name: "Terms of Service", href: "#" },
+                { name: "Help Centre", href: "/help-support" },
+                { name: "Privacy Policy", href: "/privacy" },
+                { name: "Terms of Service", href: "/terms" },
                 { name: "Contact", href: "/contact" },
               ],
             },

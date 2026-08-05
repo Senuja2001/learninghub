@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   LayoutGrid,
   MessageSquare,
+  Newspaper,
   Route,
   Settings,
   Sparkles,
@@ -39,6 +40,7 @@ const exploreLinks = [
 const communityLinks = [
   { title: "Community", href: "/community", icon: Users },
   { title: "Discussions", href: "/discussions", icon: MessageSquare },
+  { title: "News & Updates", href: "/news", icon: Newspaper, badge: "New" },
   { title: "Events & Webinars", href: "/events", icon: CalendarDays },
 ];
 
@@ -163,7 +165,7 @@ export function DashboardSidebar({
             {/* Decorative bot illustration */}
             <div className="pointer-events-none mt-4 flex justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/help-bot.png" alt="" className="h-24 w-24 object-contain translate-y-2" />
+              <img src="/help-bot.png" alt="" className="h-24 w-24 object-contain translate-y-2 animate-wave-shake" />
             </div>
           </div>
         </div>

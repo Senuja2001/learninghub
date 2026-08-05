@@ -73,14 +73,14 @@ const reachUsItems = [
     title: "Help Center",
     content: "Browse our articles and find quick answers.",
     subtext: null,
-    link: { text: "Visit Help Center", href: "#" },
+    link: { text: "Visit Help Center", href: "/help-support" },
   },
   {
     icon: Users,
     title: "Community",
     content: "Join our community to learn, share and grow together.",
     subtext: null,
-    link: { text: "Join Community", href: "#" },
+    link: { text: "Join Community", href: "/community" },
   },
 ];
 

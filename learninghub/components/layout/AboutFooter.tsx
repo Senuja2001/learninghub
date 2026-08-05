@@ -124,15 +124,15 @@ export function AboutFooter() {
 
             {/* Legal links */}
             <div className="flex items-center gap-4 text-[11.5px] text-slate-400">
-              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
-              <Link href="#" className="hover:text-white transition-colors">Cookie Policy</Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link href="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
             </div>
           </div>
 
           {/* Copyright */}
           <div className="mt-5 border-t border-white/6 pt-4 text-center text-[11px] text-slate-500">
-            © {new Date().getFullYear()} Learning Hub. Powered by Kaishi Innovations. All rights reserved.
+            © {new Date().getFullYear()} Kaishi Innovations. All rights reserved.
           </div>
         </div>
       </div>

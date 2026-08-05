@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/* ─── Realistic Reddit Mock Data Generator ─────────────────────────────────────── */
 function generatePosts(q: string) {
   const isSearch = Boolean(q);
   // If searching, generate 15 specific results, otherwise 50 hot posts
@@ -8,21 +7,74 @@ function generatePosts(q: string) {
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   const searchKeyword = isSearch ? capitalize(q) : "Tech";
 
-  return Array.from({ length: count }).map((_, i) => {
-    const topics = ["Programming", "Web Dev", "AI", "Learning", "Career", "Games"];
-    const subreddits = [
-      "programming",
-      "webdev",
-      "MachineLearning",
-      "learnprogramming",
-      "cscareerquestions",
-      "GamesOnReddit",
-    ];
+  const TOPIC_DATA = [
+    {
+      topic: "Programming",
+      subreddits: ["programming", "learnprogramming"],
+      hotTitles: [
+        "Why is everyone moving back to monoliths?",
+        "Deep dive into Kubernetes cost optimization",
+        "I built my own programming language in Rust",
+        "Best resources for learning System Design?",
+      ],
+    },
+    {
+      topic: "Web Dev",
+      subreddits: ["webdev", "reactjs", "nextjs"],
+      hotTitles: [
+        "How to implement auth in Next.js 16?",
+        "Tailwind vs CSS Modules in 2026",
+        "A guide to Server Actions in modern frameworks",
+        "What are the best UI component libraries today?",
+      ],
+    },
+    {
+      topic: "AI",
+      subreddits: ["MachineLearning", "LocalLLaMA", "artificial"],
+      hotTitles: [
+        "My thoughts on the latest AI models",
+        "Running a 70B model on consumer hardware",
+        "Will AI eventually replace junior developers?",
+        "New paper on improving transformer context windows",
+      ],
+    },
+    {
+      topic: "Learning",
+      subreddits: ["learnprogramming", "cs50"],
+      hotTitles: [
+        "What is the best way to avoid tutorial hell?",
+        "My 6-month journey to learning Full Stack",
+        "How do you stay motivated when projects get hard?",
+        "Is it too late to learn programming at 35?",
+      ],
+    },
+    {
+      topic: "Career",
+      subreddits: ["cscareerquestions", "ExperiencedDevs"],
+      hotTitles: [
+        "Best portfolio projects for junior devs in 2026?",
+        "How to negotiate salary effectively as a mid-level dev",
+        "Are tech interviews broken?",
+        "Leaving a FAANG job for an early-stage startup",
+      ],
+    },
+    {
+      topic: "Games",
+      subreddits: ["GamesOnReddit", "gamedev"],
+      hotTitles: [
+        "The state of indie game development in 2026",
+        "Just launched my new indie game built with React",
+        "What engine are you using for your 2D projects?",
+        "Post-mortem: Why my first Steam game failed",
+      ],
+    },
+  ];
 
+  return Array.from({ length: count }).map((_, i) => {
     // Pick a topic at random
-    const randIndex = Math.floor(Math.random() * topics.length);
-    const topic = topics[randIndex];
-    const subreddit = `r/${subreddits[randIndex]}`;
+    const topicObj = TOPIC_DATA[Math.floor(Math.random() * TOPIC_DATA.length)];
+    const topic = topicObj.topic;
+    const subreddit = `r/${topicObj.subreddits[Math.floor(Math.random() * topicObj.subreddits.length)]}`;
 
     // Generate a title that incorporates the search keyword if searching
     let title = "";
@@ -37,15 +89,7 @@ function generatePosts(q: string) {
       ];
       title = searchTitles[i % searchTitles.length];
     } else {
-      const hotTitles = [
-        `How to implement auth in Next.js 16?`,
-        `My thoughts on the latest AI models`,
-        `Just launched my new indie game built with React`,
-        `Why is everyone moving back to monoliths?`,
-        `Best portfolio projects for junior devs in 2026?`,
-        `Deep dive into Kubernetes cost optimization`,
-      ];
-      title = `${hotTitles[i % hotTitles.length]} (Thread ${i + 1})`;
+      title = `${topicObj.hotTitles[i % topicObj.hotTitles.length]} (Thread ${i + 1})`;
     }
 
     return {

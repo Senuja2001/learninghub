@@ -372,7 +372,7 @@ export default function HelpSupportPage() {
         </div>
 
         {/* ── Hero Search Banner ──────────────────────── */}
-        <div className="relative overflow-hidden rounded-2xl border border-violet-100 bg-gradient-to-br from-indigo-50 via-violet-50 to-purple-50 px-6 py-7">
+        <div className="relative overflow-hidden rounded-2xl border border-violet-100 bg-linear-to-br from-indigo-50 via-violet-50 to-purple-50 px-6 py-7">
           {/* Background glow blobs */}
           <div className="pointer-events-none absolute -top-12 -left-12 size-52 rounded-full bg-violet-200/25 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-12 right-32 size-52 rounded-full bg-indigo-200/25 blur-3xl" />
@@ -383,7 +383,7 @@ export default function HelpSupportPage() {
             <img
               src="/help-bot.png"
               alt="Support bot"
-              className="h-32 w-32 object-contain drop-shadow-md"
+              className="h-32 w-32 object-contain drop-shadow-md animate-wave-shake"
             />
           </div>
 
@@ -634,7 +634,7 @@ export default function HelpSupportPage() {
         aria-label="Open live chat"
       >
         <div className="overflow-hidden rounded-full p-1 border-2 border-violet-100 bg-white">
-          <img src="/help-bot.png" alt="Help Bot" className="size-12 object-cover" />
+          <img src="/help-bot.png" alt="Help Bot" className="size-12 object-cover animate-wave-shake" />
         </div>
       </button>
 

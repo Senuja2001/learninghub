@@ -712,10 +712,15 @@ export default function NewsPage() {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-4">
-                            <h2 className="line-clamp-2 text-[15px] leading-snug font-bold text-slate-900 transition-colors duration-200 group-hover:text-violet-700">
+                            <a 
+                              href={post.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="line-clamp-2 text-[15px] leading-snug font-bold text-slate-900 transition-colors duration-200 hover:text-violet-700"
+                            >
                               {pinned && <Pin className="mr-1.5 mb-0.5 inline size-3.5 text-amber-500" />}
                               {post.title}
-                            </h2>
+                            </a>
                             {/* Card Actions (Share, Bookmark, Pin) */}
                             <div className="flex shrink-0 items-center gap-1">
                               <Tooltip.Root>
@@ -812,14 +817,6 @@ export default function NewsPage() {
                                 >
                                   <LinkIcon className="size-3" />
                                 </button>
-                                <a
-                                  href={post.url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex h-6 items-center gap-1 rounded bg-slate-50 px-2 text-xs font-semibold text-violet-600 transition-colors hover:bg-violet-50 hover:text-violet-700"
-                                >
-                                  Open <ExternalLink className="size-3" />
-                                </a>
                               </div>
                             </div>
                           </div>
@@ -868,10 +865,15 @@ export default function NewsPage() {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-4">
-                            <h2 className="line-clamp-2 text-[15px] leading-snug font-bold text-slate-900 transition-colors duration-200 group-hover:text-slate-700">
+                            <a
+                              href={post.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="line-clamp-2 text-[15px] leading-snug font-bold text-slate-900 transition-colors duration-200 hover:text-slate-700"
+                            >
                               {pinned && <Pin className="mr-1.5 mb-0.5 inline size-3.5 text-amber-500" />}
                               {post.title}
-                            </h2>
+                            </a>
                             {/* Card Actions (Share, Bookmark, Pin) */}
                             <div className="flex shrink-0 items-center gap-1">
                               <Tooltip.Root>
@@ -968,14 +970,6 @@ export default function NewsPage() {
                                 >
                                   <LinkIcon className="size-3" />
                                 </button>
-                                <a
-                                  href={post.url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex h-6 items-center gap-1 rounded bg-slate-50 px-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
-                                >
-                                  Open <ExternalLink className="size-3" />
-                                </a>
                               </div>
                             </div>
                           </div>

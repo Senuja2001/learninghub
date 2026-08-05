@@ -217,6 +217,22 @@
   animation: ring-pulse 1.8s ease-out infinite;
 }
 
+/* 8. Bot wave and shake */
+@keyframes wave-shake {
+  0%   { transform: rotate(0deg); }
+  10%  { transform: rotate(14deg) translateY(-2px); }
+  20%  { transform: rotate(-8deg) translateY(1px); }
+  30%  { transform: rotate(14deg) translateY(-2px); }
+  40%  { transform: rotate(-4deg) translateY(1px); }
+  50%  { transform: rotate(10deg); }
+  60%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+.animate-wave-shake {
+  animation: wave-shake 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
 /* Fade-up initial hidden state (before IntersectionObserver fires) */
 .fade-up-hidden {
   opacity: 0;
