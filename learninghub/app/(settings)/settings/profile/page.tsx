@@ -24,7 +24,7 @@ export default function ProfileSettingsPage() {
   };
 
   return (
-    <div className="max-w-[720px]">
+    <div className="max-w-180">
       <div className="rounded-2xl bg-white p-5 md:p-8 shadow-sm border border-slate-200/60 overflow-hidden">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -38,20 +38,20 @@ export default function ProfileSettingsPage() {
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Avatar Section */}
-          <div className="flex flex-col items-center gap-4 shrink-0 w-full md:w-[140px]">
+          <div className="flex flex-col items-center gap-4 shrink-0 w-full md:w-35">
             <div className="relative group">
               <img 
                 src="https://ui-avatars.com/api/?name=John+Doe&background=e0e7ff&color=4f46e5&rounded=true&size=128" 
                 alt="Profile" 
-                className="size-[100px] rounded-full object-cover shadow-sm border-[5px] border-slate-50"
+                className="size-25 rounded-full object-cover shadow-sm border-[5px] border-slate-50"
               />
-              <button className="absolute bottom-0 right-0 grid size-[26px] place-items-center rounded-full border-[3px] border-white bg-violet-600 text-white shadow-sm hover:bg-violet-700 transition">
+              <button className="absolute bottom-0 right-0 grid size-6.5 place-items-center rounded-full border-[3px] border-white bg-violet-600 text-white shadow-sm hover:bg-violet-700 transition">
                 <Camera className="size-3" />
               </button>
             </div>
             <div className="text-center">
               <p className="text-[10px] font-medium text-slate-400 leading-tight">JPG, PNG or GIF.<br/>Max size 2MB.</p>
-              <button className="mt-4 w-full h-[34px] flex items-center justify-center rounded-lg border border-violet-200 bg-white px-3 text-[12px] font-bold text-violet-700 shadow-sm transition hover:bg-violet-50">
+              <button className="mt-4 w-full h-8.5 flex items-center justify-center rounded-lg border border-violet-200 bg-white px-3 text-[12px] font-bold text-violet-700 shadow-sm transition hover:bg-violet-50">
                 Change Photo
               </button>
             </div>
