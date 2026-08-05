@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 export default function ProfileSettingsPage() {
   const [formData, setFormData] = useState({
-    fullName: "John Doe",
+    fullName: "User123",
     email: "john.doe@kaishiinnovations.com",
     jobRole: "Software Engineer",
     department: "Engineering",

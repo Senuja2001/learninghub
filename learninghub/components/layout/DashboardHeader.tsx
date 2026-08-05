@@ -55,7 +55,7 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
           <button type="button" className="flex items-center gap-3 text-left group">
             <img 
               src="https://ui-avatars.com/api/?name=John+Doe&background=e0e7ff&color=4f46e5&rounded=true" 
-              alt="John Doe" 
+              alt="User123" 
               className="size-9 rounded-full object-cover shadow-sm border border-slate-200" 
             />
             <div className="hidden lg:flex flex-col">
