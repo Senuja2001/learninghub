@@ -3,43 +3,43 @@
 import { useState } from "react";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { DashboardSidebar } from "@/components/layout/DashboardSidebar";
+import Link from "next/link";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-950">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-950 font-sans overflow-x-hidden flex flex-col">
+      {/* The header is now always rendered, but its center navigation links have been removed inside DashboardHeader.tsx */}
       <DashboardHeader onMenuClick={() => setIsMobileMenuOpen(true)} />
 
-      <div className="flex">
+      <div className="flex flex-1 w-full max-w-[1920px] mx-auto min-w-0">
         <DashboardSidebar
           isMobileMenuOpen={isMobileMenuOpen}
           onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
         />
 
         {/* Main */}
-        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-340">
-            {/* "Registered users only" badge */}
-            <div className="mb-5 flex items-center justify-end">
-              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="size-3.5"
-                >
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-                This section is available only for registered users.
+        <main className="min-w-0 flex-1 flex flex-col">
+          <div className="flex-1 px-5 py-8 md:px-8 md:py-10">
+            <div className="mx-auto w-full max-w-[1200px]">
+              {children}
+            </div>
+          </div>
+          
+          {/* Footer */}
+          <footer className="mt-auto border-t border-slate-200 px-5 py-6 md:px-8 bg-transparent">
+            <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center justify-between gap-4 sm:flex-row text-[12px] font-semibold text-slate-500 text-center sm:text-left">
+              <p>© 2026 Learning Hub. Powered by Kaishi Innovations.</p>
+              <div className="flex items-center gap-4">
+                <Link href="/privacy" className="hover:text-slate-900 transition">Privacy Policy</Link>
+                <span className="text-slate-300">|</span>
+                <Link href="/terms" className="hover:text-slate-900 transition">Terms of Service</Link>
+                <span className="text-slate-300">|</span>
+                <Link href="/help-support" className="hover:text-slate-900 transition">Help Center</Link>
               </div>
             </div>
-            {children}
-          </div>
+          </footer>
         </main>
       </div>
     </div>

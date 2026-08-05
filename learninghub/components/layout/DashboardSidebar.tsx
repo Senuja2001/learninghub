@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -19,6 +17,7 @@ import {
   User,
   Users,
   X,
+  ArrowRight
 } from "lucide-react";
 
 const learnLinks = [
@@ -67,32 +66,32 @@ function NavGroup({
   const pathname = usePathname();
 
   return (
-    <div>
-      <p className="mb-1.5 px-3 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+    <div className="mb-6 last:mb-0">
+      <p className="mb-2 px-3 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
         {title}
       </p>
-      <nav className="space-y-0.5">
+      <nav className="space-y-1">
         {links.map((link) => {
           const Icon = link.icon;
-          const active = pathname === link.href;
+          const active = pathname.startsWith(link.href); // Using startsWith so /settings matches
 
           return (
             <Link
               key={link.href}
               href={link.href}
               onClick={onItemClick}
-              className={`flex h-9 items-center gap-3 rounded-lg px-3 text-sm transition-all duration-150 ${
+              className={`flex h-[38px] items-center gap-3 rounded-lg px-3 text-[13px] transition-all duration-150 ${
                 active
-                  ? "bg-violet-600 font-semibold text-white"
-                  : "font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  ? "bg-violet-50/80 font-bold text-violet-700"
+                  : "font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
-              <Icon className={`size-4 shrink-0 ${active ? "text-white" : "text-slate-400"}`} />
+              <Icon className={`size-[18px] shrink-0 ${active ? "text-violet-700" : "text-slate-400"}`} />
               <span className="min-w-0 flex-1 truncate">{link.title}</span>
               {link.badge ? (
                 <span
                   className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                    active ? "bg-white/20 text-white" : "bg-violet-100 text-violet-700"
+                    active ? "bg-violet-200 text-violet-800" : "bg-violet-100 text-violet-700"
                   }`}
                 >
                   {link.badge}
@@ -119,12 +118,12 @@ export function DashboardSidebar({
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div
-            className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
             onClick={onCloseMobileMenu}
           />
-          <aside className="relative flex w-64 flex-col bg-white h-full shadow-2xl animate-in slide-in-from-left-full duration-200">
-            <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 px-4">
-              <span className="font-black tracking-tight text-slate-900">Menu</span>
+          <aside className="relative flex w-[260px] flex-col bg-white h-full shadow-2xl animate-in slide-in-from-left-full duration-200">
+            <div className="flex h-[72px] shrink-0 items-center justify-between border-b border-slate-200 px-5">
+              <span className="font-black tracking-tight text-slate-900 text-lg">Menu</span>
               <button
                 onClick={onCloseMobileMenu}
                 className="grid size-8 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100"
@@ -132,7 +131,7 @@ export function DashboardSidebar({
                 <X className="size-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto px-3 py-5 space-y-5">
+            <div className="flex-1 overflow-y-auto px-4 py-6">
               <NavGroup title="Learn" links={learnLinks} onItemClick={onCloseMobileMenu} />
               <NavGroup title="Explore" links={exploreLinks} onItemClick={onCloseMobileMenu} />
               <NavGroup title="Community" links={communityLinks} onItemClick={onCloseMobileMenu} />
@@ -143,29 +142,31 @@ export function DashboardSidebar({
       )}
 
       {/* ── Desktop Sidebar ────────────────────────────────────────────── */}
-      <aside className="sticky top-16 hidden h-[calc(100vh-64px)] w-60 shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-3 py-5 lg:block">
-        <div className="space-y-5">
+      <aside className="sticky top-[72px] hidden h-[calc(100vh-72px)] w-[260px] shrink-0 overflow-y-auto border-r border-slate-200 bg-white px-4 py-6 lg:block">
+        <div>
           <NavGroup title="Learn" links={learnLinks} />
           <NavGroup title="Explore" links={exploreLinks} />
           <NavGroup title="Community" links={communityLinks} />
           <NavGroup title="Account" links={accountLinks} />
 
-          {/* ── Need help fast? CTA ─────────────────────────── */}
-          <div className="relative rounded-xl bg-violet-50 p-4 pb-0">
-            <p className="text-sm font-black leading-tight text-slate-900">Need help fast?</p>
-            <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
-              Our support team is here to assist you.
-            </p>
-            <Link
-              href="/help-support"
-              className="mt-3 inline-flex h-9 w-full items-center justify-center rounded-lg bg-violet-600 text-xs font-bold text-white shadow-md shadow-violet-300/40 transition hover:bg-violet-700"
-            >
-              Contact Support →
-            </Link>
-            {/* Decorative bot illustration */}
+          {/* ── Need help fast? CTA + Bot ─────────────────── */}
+          <div className="relative mt-8 rounded-2xl bg-gradient-to-br from-violet-100 to-fuchsia-50 p-5 pb-0 overflow-hidden">
+            <div className="relative z-10">
+              <p className="text-[15px] font-black leading-tight text-slate-900">Need help fast?</p>
+              <p className="mt-2 text-[12px] font-medium leading-relaxed text-slate-600">
+                Our support team is here to assist you.
+              </p>
+              <Link
+                href="/help-support"
+                className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-violet-600 text-[12px] font-bold text-white shadow-sm transition hover:bg-violet-700"
+              >
+                Contact Support <ArrowRight className="size-3.5" />
+              </Link>
+            </div>
+            {/* Chatbot illustration */}
             <div className="pointer-events-none mt-4 flex justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/help-bot.png" alt="" className="h-24 w-24 object-contain translate-y-2 animate-wave-shake" />
+              <img src="/help-bot.png" alt="" className="h-24 w-24 object-contain translate-y-2 animate-bounce" />
             </div>
           </div>
         </div>
